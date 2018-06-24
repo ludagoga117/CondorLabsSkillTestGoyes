@@ -26,12 +26,6 @@ public class AsyncTaskListSummary extends AsyncTask<Void, Void, SummaryHolder[]>
     private Context context;
     private SQLiteDatabase db;
 
-    private String[] entryProperties = {
-            DBConstants.DataSummary.MOVIE_NAME,
-            DBConstants.DataSummary.POSTER_PICTURE_PATH,
-            DBConstants.DataSummary.VOTE_AVERAGE
-    };
-
     public AsyncTaskListSummary(Context context, InterfaceListInteractorDatabase interactorList){
         this.interactorList = interactorList;
         this.context = context;
@@ -56,6 +50,18 @@ public class AsyncTaskListSummary extends AsyncTask<Void, Void, SummaryHolder[]>
         }
 
         List<SummaryHolder> entriesList = new ArrayList<>();
+
+        for( int i = 0; i < c.getCount(); i++ ){
+            SummaryHolder summaryObject =
+                new SummaryHolder(
+                        c.getString( 0 ),
+                        c.getString( 1 ),
+                        c.getString( 2 ),
+                        c.getString( 3 ),
+                        c.getString( 4 )
+                );
+            entriesList.add( summaryObject );
+        }
 
         c.close();
         db.close();

@@ -1,6 +1,7 @@
 package com.ldgoyes.condorlabsskilltestgoyes.presenter;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.ldgoyes.condorlabsskilltestgoyes.R;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.InteractorList;
@@ -48,5 +49,10 @@ public class PresenterList implements InterfaceListPresenterInteractor{
     @Override
     public void notifyDownloadErrorMovieDetails() {
 
+    }
+
+    @Override
+    public void notifyDownloadSuccessPopularMovies() {
+        Log.d( context.getString(R.string.debug_tag), "PresenterList - notifyDownloadSuccessPopularMovies");
     }
 }

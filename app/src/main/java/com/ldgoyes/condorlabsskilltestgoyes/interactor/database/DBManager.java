@@ -14,6 +14,8 @@ import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.Async
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.SummaryHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListInteractorDatabase;
 
+import org.json.JSONArray;
+
 import java.util.HashMap;
 
 /**
@@ -35,6 +37,15 @@ public class DBManager {
         boolean correctArguments = dataInsertionAsyncTask.setContentValues( asyncTaskArguments );
         if( correctArguments ) dataInsertionAsyncTask.execute();
         return correctArguments;
+    }
+
+    public static void createSummarySet(final Context context, InterfaceListInteractorDatabase interactorList, JSONArray moviesJsonArray){
+        AsyncTaskCreateSummary dataInsertionAsyncTask =
+                new AsyncTaskCreateSummary(
+                        context,
+                        interactorList
+                );
+        dataInsertionAsyncTask.execute();
     }
 
     public static void readSummaryEntry(final Context context, InterfaceListInteractorDatabase interactorList, String idEntry){

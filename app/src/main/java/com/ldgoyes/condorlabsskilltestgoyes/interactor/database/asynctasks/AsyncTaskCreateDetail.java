@@ -26,7 +26,7 @@ public class AsyncTaskCreateDetail extends AsyncTask<Void, Void, Boolean>  {
     private SQLiteDatabase db;
 
     public static final String[] argumentsKeys = {
-            DBConstants.DataDetail.ID_SUMMARY,
+            DBConstants.DataDetail.MOVIE_ID,
             DBConstants.DataDetail.MOVIE_OVERVIEW,
             DBConstants.DataDetail.BUDGET,
             DBConstants.DataDetail.TRAILER_LINK,

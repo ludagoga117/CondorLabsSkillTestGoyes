@@ -17,13 +17,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class InteractorList implements InterfaceListInteractorDatabase {
     private Context context;
     private InterfaceListPresenterInteractor presenterList;
+    private long remainingMoviesToStore;
 
     private String tmdbApiKey;
 
@@ -31,6 +30,7 @@ public class InteractorList implements InterfaceListInteractorDatabase {
         this.context = context;
         this.presenterList = presenterList;
         this.tmdbApiKey = context.getString( R.string.tmdb_api_key );
+        this.remainingMoviesToStore = 0;
     }
 
     public static InteractorList instanceOf( Context context, InterfaceListPresenterInteractor presenterList ){
@@ -97,6 +97,8 @@ public class InteractorList implements InterfaceListInteractorDatabase {
         try {
             JSONArray moviesJsonArray = jsonObject.getJSONArray( context.getString(R.string.JSONArray_TAG_results) );
             //Log.d( context.getString(R.string.debug_tag), moviesJsonArray.toString() );
+
+            remainingMoviesToStore = moviesJsonArray.length();
             for( int i = 0; i < moviesJsonArray.length(); i++ ){
                 JSONObject movieJsonObject = moviesJsonArray.getJSONObject( i );
 
@@ -115,6 +117,7 @@ public class InteractorList implements InterfaceListInteractorDatabase {
                 String releaseDate = movieJsonObject.getString( context.getString(R.string.JSONObject_TAG_release_date ));
 
                 HashMap <String, String> newDbEntryArguments = new HashMap<>();
+                newDbEntryArguments.put( DBConstants.DataSummary.MOVIE_ID, id);
                 newDbEntryArguments.put( DBConstants.DataSummary.MOVIE_NAME, title);
                 newDbEntryArguments.put( DBConstants.DataSummary.POSTER_PICTURE_PATH, poster_path);
                 newDbEntryArguments.put( DBConstants.DataSummary.VOTE_AVERAGE, voteAverage);
@@ -125,6 +128,7 @@ public class InteractorList implements InterfaceListInteractorDatabase {
                         newDbEntryArguments
                 );
             }
+
         } catch (JSONException e) {
             presenterList.notifyDownloadErrorMovieDetails();
             return;
@@ -132,13 +136,16 @@ public class InteractorList implements InterfaceListInteractorDatabase {
     }
 
     @Override
-    public void successfulCreateSummary() {
-        
+    public synchronized void successfulCreateSummary() {
+        if( --remainingMoviesToStore == 0 ){
+            presenterList.notifyDownloadSuccessPopularMovies();
+        }
     }
 
     @Override
     public void errorCreateSummary() {
-
+        Log.e( context.getString(R.string.debug_tag), "InteractorList - errorCreateSummary");
+        presenterList.notifyDownloadErrorPopularMovies();
     }
 
     @Override

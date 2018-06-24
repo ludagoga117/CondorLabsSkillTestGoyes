@@ -26,6 +26,7 @@ public class AsyncTaskCreateSummary extends AsyncTask<Void, Void, Boolean>  {
     private SQLiteDatabase db;
 
     public static final String[] argumentsKeys = {
+            DBConstants.DataSummary.MOVIE_ID,
             DBConstants.DataSummary.MOVIE_NAME,
             DBConstants.DataSummary.POSTER_PICTURE_PATH,
             DBConstants.DataSummary.VOTE_AVERAGE
