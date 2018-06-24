@@ -24,8 +24,4 @@ public class ActivityList extends AppCompatActivity implements InterfaceListPres
         presenterList.start();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }
