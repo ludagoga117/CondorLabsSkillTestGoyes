@@ -2,6 +2,7 @@ package com.ldgoyes.condorlabsskilltestgoyes.interactor;
 
 import android.content.Context;
 
+import com.ldgoyes.condorlabsskilltestgoyes.R;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.DetailHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.SummaryHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.webresources.asynctasks.AsyncTaskDownloadPopular;
@@ -12,17 +13,25 @@ public class InteractorList implements InterfaceListInteractorDatabase {
     private Context context;
     private InterfaceListPresenterInteractor presenterList;
 
+    private String tmdbApiKey;
+
     public InteractorList( Context context, InterfaceListPresenterInteractor presenterList ){
         this.context = context;
         this.presenterList = presenterList;
+        this.tmdbApiKey = context.getString( R.string.tmdb_api_key );
     }
 
     public static InteractorList instanceOf( Context context, InterfaceListPresenterInteractor presenterList ){
         return new InteractorList( context, presenterList );
     }
 
-    public void downloadPopularMoviesList(){
-        AsyncTaskDownloadPopular asyncTaskDownloadPopular = new AsyncTaskDownloadPopular();
+    public void downloadPopularMoviesList( String language, String pageToQuery ){
+        AsyncTaskDownloadPopular asyncTaskDownloadPopular =
+                new AsyncTaskDownloadPopular(
+                        tmdbApiKey,
+                        language,
+                        pageToQuery
+                        );
         asyncTaskDownloadPopular.execute();
     }
 
