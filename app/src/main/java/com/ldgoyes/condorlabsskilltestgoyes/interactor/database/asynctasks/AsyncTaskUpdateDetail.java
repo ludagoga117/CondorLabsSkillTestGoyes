@@ -8,24 +8,25 @@ import android.os.AsyncTask;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBConstants;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBHelper;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBManager;
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.DetailHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListInteractorDatabase;
 
 import java.util.HashMap;
 
 /**
- * Tarea asíncrona para almacenar una entrada en la tabla detalle de la base de datos
+ * Tarea asíncrona para modificar una entrada en la tabla detalle de la base de datos
  * en segundo plano.
  *
  * @author Luis David Goyes Garcés. luis.goyes117@gmail.com
  * @version 1.0.0
  */
-public class AsyncTaskCreateDetail extends AsyncTask<Void, Void, Boolean>  {
+public class AsyncTaskUpdateDetail extends AsyncTask<Void, Void, Boolean>  {
 
     private InterfaceListInteractorDatabase interactorList;
     private Context context;
     private SQLiteDatabase db;
 
-    public static final String[] argumentsKeys = {
+    public static final String[] acceptedKeys = {
             DBConstants.DataDetail.ID_SUMMARY,
             DBConstants.DataDetail.MOVIE_OVERVIEW,
             DBConstants.DataDetail.BUDGET,
@@ -34,21 +35,28 @@ public class AsyncTaskCreateDetail extends AsyncTask<Void, Void, Boolean>  {
     };
 
     private ContentValues contentValues;
+    private String idEntry;
 
-    public AsyncTaskCreateDetail(Context context, InterfaceListInteractorDatabase interactorList){
+    public AsyncTaskUpdateDetail(Context context, InterfaceListInteractorDatabase interactorList, String idEntry){
         this.interactorList = interactorList;
         this.context = context;
         this.contentValues = null;
+        this.idEntry = idEntry;
     }
 
     public boolean setContentValues( HashMap<String, String> arguments ){
-        for( String key : argumentsKeys ){
-            if( !arguments.containsKey( key ) ){
-                return false;
+        for( String argumentKey : arguments.keySet() ){
+            boolean isAcceptedKey = false;
+            for( String acceptedKey : acceptedKeys){
+                if( acceptedKey.equals( argumentKey ) ){
+                    isAcceptedKey = true;
+                    break;
+                }
             }
+            if( !isAcceptedKey ) return false;
         }
         contentValues = new ContentValues();
-        for( String key : argumentsKeys ){
+        for( String key : arguments.keySet() ){
             contentValues.put(
                     key,
                     arguments.get( key )
@@ -64,18 +72,19 @@ public class AsyncTaskCreateDetail extends AsyncTask<Void, Void, Boolean>  {
         DBHelper dBhelper = new DBHelper(context);
         db = dBhelper.getWritableDatabase();
 
-        long insertResult = db.insert(
+        long insertResult = db.update(
                 DBConstants.DataDetail.TABLE_NAME,
-                null,
-                contentValues
+                contentValues,
+                DBConstants.General.id+"=?",
+                new String[]{idEntry}
         );
 
         db.close();
 
-        if( insertResult == DBConstants.General.INSERTION_ERROR_CODE ){
-            return false;
-        }else{
+        if( insertResult > 0 ){
             return true;
+        }else{
+            return false;
         }
     }
 
@@ -86,9 +95,9 @@ public class AsyncTaskCreateDetail extends AsyncTask<Void, Void, Boolean>  {
         if( !DBManager.getActiveApp() ) return;
 
         if( result ){
-            interactorList.successfulCreateDetail();
+            interactorList.successfulUpdateDetail();
         }else{
-            interactorList.errorCreateDetail();
+            interactorList.errorUpdateDetail();
         }
     }
 }

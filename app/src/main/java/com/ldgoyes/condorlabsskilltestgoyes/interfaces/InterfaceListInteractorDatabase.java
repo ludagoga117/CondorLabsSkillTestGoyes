@@ -18,4 +18,6 @@ public interface InterfaceListInteractorDatabase {
     void errorCreateDetail();
     void successfulReadDetail( DetailHolder extractedData );
     void errorReadDetail();
+    void successfulUpdateDetail();
+    void errorUpdateDetail();
 }
