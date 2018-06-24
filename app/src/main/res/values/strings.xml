@@ -4,4 +4,19 @@
     <string name="default_tmdb_popular_movies_language">en-US</string>
     <string name="default_tmdb_popular_movies_page_to_query">1</string>
     <string name="debug_tag">GOYES</string>
+    <string name="JSONArray_TAG_results">results</string>
+    <string name="JSONObject_TAG_vote_count">vote_count</string>
+    <string name="JSONObject_TAG_id">id</string>
+    <string name="JSONObject_TAG_video">video</string>
+    <string name="JSONObject_TAG_vote_average">vote_average</string>
+    <string name="JSONObject_TAG_title">title</string>
+    <string name="JSONObject_TAG_popularity">popularity</string>
+    <string name="JSONObject_TAG_poster_path">poster_path</string>
+    <string name="JSONObject_TAG_original_language">original_language</string>
+    <string name="JSONObject_TAG_original_title">original_title</string>
+    <string name="JSONObject_TAG_genre_ids">genre_ids</string>
+    <string name="JSONObject_TAG_backdrop_path">backdrop_path</string>
+    <string name="JSONObject_TAG_adult">adult</string>
+    <string name="JSONObject_TAG_overview">overview</string>
+    <string name="JSONObject_TAG_release_date">release_date</string>
 </resources>

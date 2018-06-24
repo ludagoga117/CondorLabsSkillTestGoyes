@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.ldgoyes.condorlabsskilltestgoyes.R;
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBConstants;
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBManager;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.DetailHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.SummaryHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.webresources.asynctasks.AsyncTaskDownloadJSON;
@@ -11,7 +13,13 @@ import com.ldgoyes.condorlabsskilltestgoyes.interactor.webresources.asynctasks.A
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListInteractorDatabase;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListPresenterInteractor;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class InteractorList implements InterfaceListInteractorDatabase {
     private Context context;
@@ -42,6 +50,19 @@ public class InteractorList implements InterfaceListInteractorDatabase {
         asyncTaskDownloadPopular.execute();
     }
 
+    public void downloadMovieDetails( String movieId, String language ){
+        String URLdownloadMovieDetails =
+                "https://api.themoviedb.org/3/movie/"+ movieId
+                        + "?api_key=" + tmdbApiKey
+                        + "&language=" + language;
+
+        AsyncTaskDownloadJSON asyncTaskDownloadMovieDetails = new AsyncTaskDownloadJSON(
+                URLdownloadMovieDetails,
+                processDownloadMovieDetails()
+        );
+        asyncTaskDownloadMovieDetails.execute();
+    }
+
     private AsyncTaskResponseDownloadJSON processDownloadPopularMovies(){
         AsyncTaskResponseDownloadJSON asyncTaskResponse = new AsyncTaskResponseDownloadJSON(){
             @Override
@@ -51,10 +72,63 @@ public class InteractorList implements InterfaceListInteractorDatabase {
                     return;
                 }
 
+                storePopularMoviesJsonResult( jsonObject );
+            }
+        };
+        return asyncTaskResponse;
+    }
+
+    private AsyncTaskResponseDownloadJSON processDownloadMovieDetails(){
+        AsyncTaskResponseDownloadJSON asyncTaskResponse = new AsyncTaskResponseDownloadJSON() {
+            @Override
+            public void processResult(JSONObject jsonObject) {
+                if( jsonObject == null ) {
+                    presenterList.notifyDownloadErrorMovieDetails();
+                    return;
+                }
+
                 Log.d( context.getString(R.string.debug_tag), jsonObject.toString() );
             }
         };
         return asyncTaskResponse;
+    }
+
+    private void storePopularMoviesJsonResult( JSONObject jsonObject ){
+        try {
+            JSONArray moviesJsonArray = jsonObject.getJSONArray( context.getString(R.string.JSONArray_TAG_results) );
+            //Log.d( context.getString(R.string.debug_tag), moviesJsonArray.toString() );
+            for( int i = 0; i < moviesJsonArray.length(); i++ ){
+                JSONObject movieJsonObject = moviesJsonArray.getJSONObject( i );
+
+                String voteCount = movieJsonObject.getString( context.getString(R.string.JSONObject_TAG_vote_count) );
+                String id = movieJsonObject.getString( context.getString(R.string.JSONObject_TAG_id ) );
+                String voteAverage = movieJsonObject.getString( context.getString(R.string.JSONObject_TAG_vote_average ) );
+                String title = movieJsonObject.getString( context.getString(R.string.JSONObject_TAG_title ));
+                String popularity = movieJsonObject.getString( context.getString(R.string.JSONObject_TAG_popularity ));
+                String poster_path = movieJsonObject.getString( context.getString(R.string.JSONObject_TAG_poster_path ));
+                String originalLanguage = movieJsonObject.getString( context.getString(R.string.JSONObject_TAG_original_language ));
+                String originalTitle = movieJsonObject.getString( context.getString(R.string.JSONObject_TAG_original_title ));
+                String genreIds = movieJsonObject.getString( context.getString(R.string.JSONObject_TAG_genre_ids ));
+                String backdropPath = movieJsonObject.getString( context.getString(R.string.JSONObject_TAG_backdrop_path ));
+                String adult = movieJsonObject.getString( context.getString(R.string.JSONObject_TAG_adult ));
+                String overview = movieJsonObject.getString( context.getString(R.string.JSONObject_TAG_overview ));
+                String releaseDate = movieJsonObject.getString( context.getString(R.string.JSONObject_TAG_release_date ));
+
+                HashMap <String, String> newDbEntryArguments = new HashMap<>();
+                newDbEntryArguments.put( DBConstants.DataSummary.MOVIE_NAME, title);
+                newDbEntryArguments.put( DBConstants.DataSummary.POSTER_PICTURE_PATH, poster_path);
+                newDbEntryArguments.put( DBConstants.DataSummary.VOTE_AVERAGE, voteAverage);
+
+                DBManager.createSummaryEntry(
+                        context,
+                        this,
+                        newDbEntryArguments
+                );
+            }
+        } catch (JSONException e) {
+            presenterList.notifyDownloadErrorMovieDetails();
+            return;
+        }
     }
 
     @Override

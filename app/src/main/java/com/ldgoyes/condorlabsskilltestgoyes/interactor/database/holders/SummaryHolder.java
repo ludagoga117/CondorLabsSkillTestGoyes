@@ -9,7 +9,7 @@ public class SummaryHolder {
             DBConstants.DataSummary.POSTER_PICTURE_PATH,
             DBConstants.DataSummary.VOTE_AVERAGE
     };
-    private String id, movieName, posterPicturePath, voteAverage;
+    public String id, movieName, posterPicturePath, voteAverage;
 
     public SummaryHolder( String id, String movieName, String posterPicturePath, String voteAverage ){
         this.id = id;

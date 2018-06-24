@@ -34,11 +34,19 @@ public class PresenterList implements InterfaceListPresenterInteractor{
 
     public void start(){
         interactorList.downloadPopularMoviesList( tmdbPopularMoviesLanguage, tmdbPopularMoviesPageToQuery );
+        /* TODO
+        interactorList.downloadMovieDetails( );
+        */
     }
 
 
     @Override
     public void notifyDownloadErrorPopularMovies() {
+
+    }
+
+    @Override
+    public void notifyDownloadErrorMovieDetails() {
 
     }
 }
