@@ -69,6 +69,8 @@ public class AsyncTaskCreateSummary extends AsyncTask<Void, Void, Boolean>  {
                 contentValues
         );
 
+        db.close();
+
         if( insertResult == DBConstants.General.INSERTION_ERROR_CODE ){
             return false;
         }else{

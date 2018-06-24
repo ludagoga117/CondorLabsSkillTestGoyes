@@ -5,6 +5,8 @@ import android.content.Context;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListInteractorDatabase;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListPresenterInteractor;
 
+import java.util.HashMap;
+
 public class InteractorList implements InterfaceListInteractorDatabase {
     private Context context;
     private InterfaceListPresenterInteractor presenterList;
@@ -25,6 +27,16 @@ public class InteractorList implements InterfaceListInteractorDatabase {
 
     @Override
     public void errorCreateSummary() {
+
+    }
+
+    @Override
+    public void successfulReadSummary(HashMap<String, String> extractedData) {
+
+    }
+
+    @Override
+    public void errorReadSummary() {
 
     }
 }
