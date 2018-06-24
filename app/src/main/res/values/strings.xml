@@ -19,4 +19,5 @@
     <string name="JSONObject_TAG_adult">adult</string>
     <string name="JSONObject_TAG_overview">overview</string>
     <string name="JSONObject_TAG_release_date">release_date</string>
+    <string name="has_video_tag">__HASVIDEO__</string>
 </resources>

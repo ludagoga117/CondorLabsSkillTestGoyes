@@ -3,15 +3,7 @@ package com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBConstants;
 
 public class DetailHolder {
-    public static final String[] entryProperties = {
-            DBConstants.General.id,
-            DBConstants.DataDetail.MOVIE_ID,
-            DBConstants.DataDetail.MOVIE_OVERVIEW,
-            DBConstants.DataDetail.RELEASE_DATE,
-            DBConstants.DataDetail.BUDGET,
-            DBConstants.DataDetail.TRAILER_LINK,
-            DBConstants.DataDetail.IS_FAVORITE,
-    };
+    public static final String[] entryProperties = DBConstants.DataDetail.entryProperties;
     private String id, movieId, movieOverview, releaseDate, budget, trailerLink;
     private boolean isFavorite;
 

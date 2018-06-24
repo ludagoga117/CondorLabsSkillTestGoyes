@@ -58,7 +58,8 @@ public class AsyncTaskListSummary extends AsyncTask<Void, Void, SummaryHolder[]>
                         c.getString( 1 ),
                         c.getString( 2 ),
                         c.getString( 3 ),
-                        c.getString( 4 )
+                        c.getString( 4 ),
+                        c.getString( 5 )
                 );
             entriesList.add( summaryObject );
         }

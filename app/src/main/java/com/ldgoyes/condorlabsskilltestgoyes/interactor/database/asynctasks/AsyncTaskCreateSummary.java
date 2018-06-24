@@ -27,13 +27,13 @@ public class AsyncTaskCreateSummary extends AsyncTask<Void, Void, Boolean>  {
 
     public static final String[] argumentsKeys = {
             DBConstants.DataSummary.MOVIE_ID,
+            DBConstants.DataSummary.VOTE_COUNT,
             DBConstants.DataSummary.MOVIE_NAME,
             DBConstants.DataSummary.POSTER_PICTURE_PATH,
             DBConstants.DataSummary.VOTE_AVERAGE
     };
 
     private ContentValues contentValues;
-    private HashMap<String, String> arguments;
 
     public AsyncTaskCreateSummary(Context context, InterfaceListInteractorDatabase interactorList){
         this.interactorList = interactorList;

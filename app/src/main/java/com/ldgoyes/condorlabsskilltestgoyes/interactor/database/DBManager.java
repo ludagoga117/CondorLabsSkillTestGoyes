@@ -39,15 +39,6 @@ public class DBManager {
         return correctArguments;
     }
 
-    public static void createSummarySet(final Context context, InterfaceListInteractorDatabase interactorList, JSONArray moviesJsonArray){
-        AsyncTaskCreateSummary dataInsertionAsyncTask =
-                new AsyncTaskCreateSummary(
-                        context,
-                        interactorList
-                );
-        dataInsertionAsyncTask.execute();
-    }
-
     public static void readSummaryEntry(final Context context, InterfaceListInteractorDatabase interactorList, String idEntry){
         AsyncTaskReadSummary dataExtractionAsyncTask =
                 new AsyncTaskReadSummary(

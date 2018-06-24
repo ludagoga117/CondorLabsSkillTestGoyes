@@ -110,6 +110,7 @@ public class InteractorList implements InterfaceListInteractorDatabase {
                 JSONObject movieJsonObject = moviesJsonArray.getJSONObject( i );
 
                 String voteCount = movieJsonObject.getString( context.getString(R.string.JSONObject_TAG_vote_count) );
+                String video = movieJsonObject.getString( context.getString(R.string.JSONObject_TAG_video ));
                 String id = movieJsonObject.getString( context.getString(R.string.JSONObject_TAG_id ) );
                 String voteAverage = movieJsonObject.getString( context.getString(R.string.JSONObject_TAG_vote_average ) );
                 String title = movieJsonObject.getString( context.getString(R.string.JSONObject_TAG_title ));
@@ -125,6 +126,7 @@ public class InteractorList implements InterfaceListInteractorDatabase {
 
                 HashMap <String, String> newSummaryEntryArguments = new HashMap<>();
                 newSummaryEntryArguments.put( DBConstants.DataSummary.MOVIE_ID, id);
+                newSummaryEntryArguments.put( DBConstants.DataSummary.VOTE_COUNT, voteCount);
                 newSummaryEntryArguments.put( DBConstants.DataSummary.MOVIE_NAME, title);
                 newSummaryEntryArguments.put( DBConstants.DataSummary.POSTER_PICTURE_PATH, poster_path);
                 newSummaryEntryArguments.put( DBConstants.DataSummary.VOTE_AVERAGE, voteAverage);
@@ -141,7 +143,7 @@ public class InteractorList implements InterfaceListInteractorDatabase {
                 newDetailEntryArguments.put( DBConstants.DataDetail.MOVIE_OVERVIEW, overview);
                 newDetailEntryArguments.put( DBConstants.DataDetail.RELEASE_DATE, releaseDate);
                 newDetailEntryArguments.put( DBConstants.DataDetail.BUDGET, null);
-                newDetailEntryArguments.put( DBConstants.DataDetail.TRAILER_LINK, null);
+                newDetailEntryArguments.put( DBConstants.DataDetail.TRAILER_LINK, (video.equals("true")) ? context.getString(R.string.has_video_tag) : null);
                 newDetailEntryArguments.put( DBConstants.DataDetail.IS_FAVORITE, "false");
 
                 DBManager.createDetailEntry(
