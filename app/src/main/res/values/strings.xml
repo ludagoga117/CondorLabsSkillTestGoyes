@@ -22,4 +22,6 @@
     <string name="has_video_tag">__HASVIDEO__</string>
     <string name="JSONObject_TAG_budget">budget</string>
     <string name="JSONObject_TAG_youtubevideo">key</string>
+
+    <string name="signature_goyes">Luis David Goyes Garcés</string>
 </resources>
