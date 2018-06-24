@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.ldgoyes.condorlabsskilltestgoyes.R;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.InteractorList;
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.SummaryHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListPresenterInteractor;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListPresenterView;
 
@@ -44,12 +45,7 @@ public class PresenterList implements InterfaceListPresenterInteractor{
 
     @Override
     public void notifyDownloadErrorPopularMovies() {
-
-    }
-
-    @Override
-    public void notifyDownloadErrorMovieDetails() {
-
+        Log.e( context.getString(R.string.debug_tag), "PresenterList - notifyDownloadErrorPopularMovies");
     }
 
     @Override
@@ -62,6 +58,19 @@ public class PresenterList implements InterfaceListPresenterInteractor{
     public void notifySuccessClearTableSummary() {
         Log.d( context.getString(R.string.debug_tag), "PresenterList - notifySuccessClearTableSummary");
     }
+
+    @Override
+    public void notifyExtractionSuccessPopularMovies(SummaryHolder[] extractedData) {
+        Log.d( context.getString(R.string.debug_tag), "PresenterList - notifyExtractionSuccessPopularMovies. Number of extracted entries: " + Integer.toString(extractedData.length) );
+        for( SummaryHolder summaryObject : extractedData ){
+            Log.d( context.getString(R.string.debug_tag), "(id/name): ("+ summaryObject.movieId + "/" + summaryObject.movieName +")");
+        }
+
+    }
+
+
+    @Override
+    public void notifyDownloadErrorMovieDetails() {}
 
     @Override
     public void notifyErrorClearTableSummary() {}

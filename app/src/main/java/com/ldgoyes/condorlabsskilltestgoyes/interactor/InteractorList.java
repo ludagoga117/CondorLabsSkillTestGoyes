@@ -131,6 +131,8 @@ public class InteractorList implements InterfaceListInteractorDatabase {
                 newSummaryEntryArguments.put( DBConstants.DataSummary.POSTER_PICTURE_PATH, poster_path);
                 newSummaryEntryArguments.put( DBConstants.DataSummary.VOTE_AVERAGE, voteAverage);
 
+                Log.d( context.getString(R.string.debug_tag), "Storing: " + id + " - " + title );
+
                 DBManager.createSummaryEntry(
                         context,
                         this,
@@ -161,7 +163,10 @@ public class InteractorList implements InterfaceListInteractorDatabase {
     }
 
     public void extractPopularMoviesFromDatabase(){
-
+        DBManager.listSummaryEntries(
+                context,
+                this
+        );
     }
 
     @Override
@@ -173,23 +178,18 @@ public class InteractorList implements InterfaceListInteractorDatabase {
 
     @Override
     public void errorCreateSummary() {
-        Log.e( context.getString(R.string.debug_tag), "InteractorList - errorCreateSummary");
         presenterList.notifyDownloadErrorPopularMovies();
     }
 
     @Override
-    public void successfulReadSummary(SummaryHolder extractedData) {
-
-    }
+    public void successfulReadSummary(SummaryHolder extractedData) {}
 
     @Override
-    public void errorReadSummary() {
-
-    }
+    public void errorReadSummary() {}
 
     @Override
     public void successfulListSummary(SummaryHolder[] extractedData) {
-
+        presenterList.notifyExtractionSuccessPopularMovies( extractedData );
     }
 
     @Override

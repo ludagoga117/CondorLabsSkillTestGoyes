@@ -51,7 +51,9 @@ public class AsyncTaskListSummary extends AsyncTask<Void, Void, SummaryHolder[]>
 
         List<SummaryHolder> entriesList = new ArrayList<>();
 
-        for( int i = 0; i < c.getCount(); i++ ){
+        int storedMovies = c.getCount();
+
+        for( int i = 0; i < storedMovies; i++ ){
             SummaryHolder summaryObject =
                 new SummaryHolder(
                         c.getString( 0 ),
@@ -62,6 +64,7 @@ public class AsyncTaskListSummary extends AsyncTask<Void, Void, SummaryHolder[]>
                         c.getString( 5 )
                 );
             entriesList.add( summaryObject );
+            c.moveToNext();
         }
 
         c.close();
