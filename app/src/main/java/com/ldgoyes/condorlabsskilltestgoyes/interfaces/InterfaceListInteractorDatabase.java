@@ -20,4 +20,6 @@ public interface InterfaceListInteractorDatabase {
     void errorReadDetail();
     void successfulUpdateDetail();
     void errorUpdateDetail();
+    void successfulDeleteDetail();
+    void errorDeleteDetail();
 }
