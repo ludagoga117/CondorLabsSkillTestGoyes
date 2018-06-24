@@ -12,6 +12,8 @@ public interface InterfaceListInteractorDatabase {
     void errorListSummary();
     void successfulClearSummary();
     void errorClearSummary();
+    void successfulDeleteSummary();
+    void errorDeleteSummary();
 
 
     void successfulCreateDetail();

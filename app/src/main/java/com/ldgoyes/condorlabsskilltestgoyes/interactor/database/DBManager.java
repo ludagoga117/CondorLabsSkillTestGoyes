@@ -3,9 +3,14 @@ package com.ldgoyes.condorlabsskilltestgoyes.interactor.database;
 import android.content.Context;
 
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.AsyncTaskClearSummary;
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.AsyncTaskCreateDetail;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.AsyncTaskCreateSummary;
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.AsyncTaskDeleteDetail;
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.AsyncTaskDeleteSummary;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.AsyncTaskListSummary;
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.AsyncTaskReadDetail;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.AsyncTaskReadSummary;
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.AsyncTaskUpdateDetail;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListInteractorDatabase;
 
 import java.util.HashMap;
@@ -26,6 +31,8 @@ public class DBManager {
     public static boolean getActiveApp (){
         return activeApp;
     }
+
+    /* SUMMARY METHODS */
 
     public static boolean createSummaryEntry(final Context context, InterfaceListInteractorDatabase interactorList, HashMap<String, String> asyncTaskArguments){
         AsyncTaskCreateSummary dataInsertionAsyncTask =
@@ -64,5 +71,60 @@ public class DBManager {
                         interactorList
                 );
         dataRemovalAsyncTask.execute();
+    }
+
+    public static void deleteSummaryEntry(final Context context, InterfaceListInteractorDatabase interactorList, HashMap<String, String> asyncTaskArguments, String idEntry){
+        AsyncTaskDeleteSummary dataInsertionAsyncTask =
+                new AsyncTaskDeleteSummary(
+                        context,
+                        interactorList,
+                        idEntry
+                );
+        dataInsertionAsyncTask.execute();
+    }
+
+    /* DETAIL METHODS */
+
+    public static boolean createDetailEntry(final Context context, InterfaceListInteractorDatabase interactorList, HashMap<String, String> asyncTaskArguments){
+        AsyncTaskCreateDetail dataInsertionAsyncTask =
+                new AsyncTaskCreateDetail(
+                        context,
+                        interactorList
+                );
+        boolean correctArguments = dataInsertionAsyncTask.setContentValues( asyncTaskArguments );
+        if( correctArguments ) dataInsertionAsyncTask.execute();
+        return correctArguments;
+    }
+
+    public static void readDetailEntry(final Context context, InterfaceListInteractorDatabase interactorList, String idEntry){
+        AsyncTaskReadDetail dataExtractionAsyncTask =
+                new AsyncTaskReadDetail(
+                        context,
+                        interactorList,
+                        idEntry
+                );
+        dataExtractionAsyncTask.execute();
+    }
+
+    public static boolean updateDetailEntry(final Context context, InterfaceListInteractorDatabase interactorList, HashMap<String, String> asyncTaskArguments, String idEntry){
+        AsyncTaskUpdateDetail dataInsertionAsyncTask =
+                new AsyncTaskUpdateDetail(
+                        context,
+                        interactorList,
+                        idEntry
+                );
+        boolean correctArguments = dataInsertionAsyncTask.setContentValues( asyncTaskArguments );
+        if( correctArguments ) dataInsertionAsyncTask.execute();
+        return correctArguments;
+    }
+
+    public static void deleteDetailEntry(final Context context, InterfaceListInteractorDatabase interactorList, HashMap<String, String> asyncTaskArguments, String idEntry){
+        AsyncTaskDeleteDetail dataInsertionAsyncTask =
+                new AsyncTaskDeleteDetail(
+                        context,
+                        interactorList,
+                        idEntry
+                );
+        dataInsertionAsyncTask.execute();
     }
 }
