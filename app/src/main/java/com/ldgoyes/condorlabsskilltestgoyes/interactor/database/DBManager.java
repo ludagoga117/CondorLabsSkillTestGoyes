@@ -3,6 +3,7 @@ package com.ldgoyes.condorlabsskilltestgoyes.interactor.database;
 import android.content.Context;
 
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.AsyncTaskCreateSummary;
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.AsyncTaskListSummary;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.AsyncTaskReadSummary;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListInteractorDatabase;
 
@@ -42,6 +43,15 @@ public class DBManager {
                         context,
                         interactorList,
                         idEntry
+                );
+        dataExtractionAsyncTask.execute();
+    }
+
+    public static void listSummaryEntries(final Context context, InterfaceListInteractorDatabase interactorList){
+        AsyncTaskListSummary dataExtractionAsyncTask =
+                new AsyncTaskListSummary(
+                        context,
+                        interactorList
                 );
         dataExtractionAsyncTask.execute();
     }

@@ -13,7 +13,7 @@ import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListInteractorDa
 import java.util.HashMap;
 
 /**
- * Tarea asíncrona para extraer una entrada en la tabla resumen de la base de datos
+ * Tarea asíncrona para extraer una entrada de la tabla resumen de la base de datos
  * en segundo plano.
  *
  * @author Luis David Goyes Garcés. luis.goyes117@gmail.com
