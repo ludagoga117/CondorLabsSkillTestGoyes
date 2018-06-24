@@ -1,5 +1,6 @@
 package com.ldgoyes.condorlabsskilltestgoyes.interfaces;
 
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.DetailHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.SummaryHolder;
 
 public interface InterfaceListInteractorDatabase {
@@ -11,4 +12,10 @@ public interface InterfaceListInteractorDatabase {
     void errorListSummary();
     void successfulClearSummary();
     void errorClearSummary();
+
+
+    void successfulCreateDetail();
+    void errorCreateDetail();
+    void successfulReadDetail( DetailHolder extractedData );
+    void errorReadDetail();
 }
