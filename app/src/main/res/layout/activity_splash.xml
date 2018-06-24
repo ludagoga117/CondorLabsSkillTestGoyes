@@ -6,9 +6,4 @@
     android:layout_height="match_parent"
     tools:context=".view.ActivitySplash">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="splash"/>
-
 </android.support.constraint.ConstraintLayout>
