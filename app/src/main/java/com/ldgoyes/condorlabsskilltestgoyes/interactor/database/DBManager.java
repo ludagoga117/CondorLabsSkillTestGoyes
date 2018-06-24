@@ -23,15 +23,6 @@ import java.util.HashMap;
  * @version 1.0.0
  */
 public class DBManager {
-    private static boolean activeApp = false;
-
-    public synchronized static void setActiveApp ( boolean setValue ){
-        activeApp = setValue;
-    }
-    public static boolean getActiveApp (){
-        return activeApp;
-    }
-
     /* SUMMARY METHODS */
 
     public static boolean createSummaryEntry(final Context context, InterfaceListInteractorDatabase interactorList, HashMap<String, String> asyncTaskArguments){

@@ -68,8 +68,6 @@ public class AsyncTaskReadSummary extends AsyncTask<Void, Void, SummaryHolder> {
     protected void onPostExecute(SummaryHolder extractedData ) {
         if( db.isOpen() ) db.close();
 
-        if( !DBManager.getActiveApp() ) return;
-
         if( extractedData != null ){
             interactorList.successfulReadSummary( extractedData );
         }else{

@@ -70,8 +70,6 @@ public class AsyncTaskReadDetail extends AsyncTask<Void, Void, DetailHolder> {
     protected void onPostExecute(DetailHolder extractedData ) {
         if( db.isOpen() ) db.close();
 
-        if( !DBManager.getActiveApp() ) return;
-
         if( extractedData != null ){
             interactorList.successfulReadDetail( extractedData );
         }else{

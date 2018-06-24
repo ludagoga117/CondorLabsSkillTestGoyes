@@ -27,6 +27,6 @@ public class PresenterList implements InterfaceListPresenterInteractor{
     }
 
     public void start(){
-
+        interactorList.downloadPopularMoviesList();
     }
 }

@@ -54,8 +54,6 @@ public class AsyncTaskDeleteSummary extends AsyncTask<Void, Void, Boolean>  {
     protected void onPostExecute(Boolean result) {
         if( db.isOpen() ) db.close();
 
-        if( !DBManager.getActiveApp() ) return;
-
         if( result ){
             interactorList.successfulDeleteSummary();
         }else{

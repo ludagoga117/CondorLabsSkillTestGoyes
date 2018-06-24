@@ -16,7 +16,6 @@ public class ActivityList extends AppCompatActivity implements InterfaceListPres
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        DBManager.setActiveApp( true );
 
         presenterList = PresenterList.instanceOf(
                 ActivityList.this,
@@ -27,7 +26,6 @@ public class ActivityList extends AppCompatActivity implements InterfaceListPres
 
     @Override
     protected void onDestroy() {
-        DBManager.setActiveApp( false );
         super.onDestroy();
     }
 }

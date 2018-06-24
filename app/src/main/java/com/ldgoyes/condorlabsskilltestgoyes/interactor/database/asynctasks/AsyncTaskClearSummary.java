@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.InteractorList;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBConstants;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBHelper;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBManager;
@@ -36,7 +37,7 @@ public class AsyncTaskClearSummary extends AsyncTask<Void, Void, Boolean> {
     protected void onPostExecute(Boolean result) {
         if( db.isOpen() ) db.close();
 
-        if( !DBManager.getActiveApp() ) return;
+        if( !InteractorList.getActiveApp() ) return;
 
         if( result ){
             interactorList.successfulClearSummary();
