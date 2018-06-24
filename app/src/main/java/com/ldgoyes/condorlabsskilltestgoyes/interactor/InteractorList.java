@@ -139,6 +139,7 @@ public class InteractorList implements InterfaceListInteractorDatabase {
 
                 newDetailEntryArguments.put( DBConstants.DataDetail.MOVIE_ID, id);
                 newDetailEntryArguments.put( DBConstants.DataDetail.MOVIE_OVERVIEW, overview);
+                newDetailEntryArguments.put( DBConstants.DataDetail.RELEASE_DATE, releaseDate);
                 newDetailEntryArguments.put( DBConstants.DataDetail.BUDGET, null);
                 newDetailEntryArguments.put( DBConstants.DataDetail.TRAILER_LINK, null);
                 newDetailEntryArguments.put( DBConstants.DataDetail.IS_FAVORITE, "false");
