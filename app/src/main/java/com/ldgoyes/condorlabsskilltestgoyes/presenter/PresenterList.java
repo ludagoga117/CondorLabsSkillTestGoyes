@@ -19,7 +19,6 @@ public class PresenterList implements InterfaceListPresenterInteractor{
     private String tmdbPopularMoviesLanguage;
     private String tmdbPopularMoviesPageToQuery;
 
-    private int remainingUpdates;
 
     public PresenterList ( Context context, InterfaceListPresenterView activityList ){
         this.context = context;
@@ -30,7 +29,6 @@ public class PresenterList implements InterfaceListPresenterInteractor{
         );
         this.tmdbPopularMoviesLanguage = context.getString( R.string.default_tmdb_popular_movies_language );
         this.tmdbPopularMoviesPageToQuery = context.getString( R.string.default_tmdb_popular_movies_page_to_query );
-        this.remainingUpdates = 0;
     }
 
     public static PresenterList instanceOf ( Context context, InterfaceListPresenterView activityList ){
@@ -44,21 +42,11 @@ public class PresenterList implements InterfaceListPresenterInteractor{
 
 
     @Override
-    public void notifyDownloadErrorPopularMovies() {
-        Log.e( context.getString(R.string.debug_tag), "PresenterList - notifyDownloadErrorPopularMovies");
-    }
+    public void notifyDownloadErrorPopularMovies() {}
 
     @Override
     public void notifyDownloadSuccessPopularMovies() {
         interactorList.extractPopularMoviesFromDatabase();
-    }
-
-    @Override
-    public synchronized void notifyUpdateSuccessDetail() {
-        if( --remainingUpdates == 0 ){
-            // TODO borrar este metodo. Solo se debe llamar si se requieren los detalles. De lo contrario, no.
-            interactorList.extractMovieDetailsFromDatabase( "297762" );
-        }
     }
 
     @Override
@@ -69,25 +57,9 @@ public class PresenterList implements InterfaceListPresenterInteractor{
     public void notifyExtractionSuccessPopularMovies(SummaryHolder[] extractedData) {
         for( SummaryHolder summaryObject : extractedData ){
 
-            // TODO borrar estos metodos. Solo se deben llamar si se requieren los detalles. De lo contrario, no
-            remainingUpdates = 2;
-            interactorList.downloadMovieDetails( summaryObject.movieId, tmdbPopularMoviesLanguage );
-            interactorList.downloadMovieVideo( summaryObject.movieId );
         }
     }
 
     @Override
-    public void notifyExtractionSuccessMovieDetails(DetailHolder extractedData) {
-        String movieId = extractedData.movieId;
-        String trailerLink = extractedData.trailerLink;
-        String budget = extractedData.budget;
-
-    }
-
-
-    @Override
     public void notifyDownloadErrorMovieDetails() {}
-
-    @Override
-    public void notifyDownloadErrorVideo() {}
 }

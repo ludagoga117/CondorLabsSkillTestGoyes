@@ -7,9 +7,8 @@ import android.os.AsyncTask;
 
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBConstants;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBHelper;
-import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBManager;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.DetailHolder;
-import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListInteractorDatabase;
+import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceDetailInteractorDatabase;
 
 /**
  * Tarea asíncrona para extraer una entrada de la tabla detalle de la base de datos
@@ -20,13 +19,13 @@ import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListInteractorDa
  */
 public class AsyncTaskReadDetail extends AsyncTask<Void, Void, DetailHolder> {
 
-    private InterfaceListInteractorDatabase interactorList;
+    private InterfaceDetailInteractorDatabase interactorDetail;
     private Context context;
     private SQLiteDatabase db;
     private String movieId;
 
-    public AsyncTaskReadDetail(Context context, InterfaceListInteractorDatabase interactorList, String movieId){
-        this.interactorList = interactorList;
+    public AsyncTaskReadDetail(Context context, InterfaceDetailInteractorDatabase interactorDetail, String movieId){
+        this.interactorDetail = interactorDetail;
         this.context = context;
         this.movieId = movieId;
     }
@@ -66,15 +65,16 @@ public class AsyncTaskReadDetail extends AsyncTask<Void, Void, DetailHolder> {
 
         return extractedData;
     }
+    //InterfaceDetailInteractorDatabase interactorDetail
 
     @Override
     protected void onPostExecute(DetailHolder extractedData ) {
         if( db.isOpen() ) db.close();
 
         if( extractedData != null ){
-            interactorList.successfulReadDetail( extractedData );
+            interactorDetail.successfulReadDetail( extractedData );
         }else{
-            interactorList.errorReadDetail();
+            interactorDetail.errorReadDetail();
         }
     }
 }

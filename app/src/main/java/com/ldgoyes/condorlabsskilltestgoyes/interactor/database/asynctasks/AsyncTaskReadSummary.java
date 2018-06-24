@@ -23,12 +23,12 @@ public class AsyncTaskReadSummary extends AsyncTask<Void, Void, SummaryHolder> {
     private InterfaceListInteractorDatabase interactorList;
     private Context context;
     private SQLiteDatabase db;
-    private String idEntry;
+    private String movieId;
 
-    public AsyncTaskReadSummary(Context context, InterfaceListInteractorDatabase interactorList, String idEntry){
+    public AsyncTaskReadSummary(Context context, InterfaceListInteractorDatabase interactorList, String movieId){
         this.interactorList = interactorList;
         this.context = context;
-        this.idEntry = idEntry;
+        this.movieId = movieId;
     }
 
     @Override
@@ -39,9 +39,9 @@ public class AsyncTaskReadSummary extends AsyncTask<Void, Void, SummaryHolder> {
         Cursor c = db.query(
                 DBConstants.DataSummary.TABLE_NAME,
                 SummaryHolder.entryProperties,
-                DBConstants.General.id+"=?",
+                DBConstants.DataSummary.MOVIE_ID+"=?",
                 new String[]{
-                        idEntry
+                        movieId
                 },
                 null, null, null
         );

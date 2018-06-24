@@ -15,13 +15,6 @@ public interface InterfaceListInteractorDatabase {
     void successfulDeleteSummary();
     void errorDeleteSummary();
 
-
     void successfulCreateDetail();
     void errorCreateDetail();
-    void successfulReadDetail( DetailHolder extractedData );
-    void errorReadDetail();
-    void successfulUpdateDetail();
-    void errorUpdateDetail();
-    void successfulDeleteDetail();
-    void errorDeleteDetail();
 }

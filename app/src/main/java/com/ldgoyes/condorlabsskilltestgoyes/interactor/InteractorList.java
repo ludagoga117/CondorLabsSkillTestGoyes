@@ -37,6 +37,13 @@ public class InteractorList implements InterfaceListInteractorDatabase {
         return new InteractorList( context, presenterList );
     }
 
+    public void clearPopularMoviesList(){
+        DBManager.clearSummaryEntries(
+                context,
+                this
+        );
+    }
+
     public void downloadPopularMoviesList( String language, String pageToQuery ){
         String URLdownloadPopularMovies =
                 "https://api.themoviedb.org/3/movie/popular?api_key=" + tmdbApiKey
@@ -48,72 +55,6 @@ public class InteractorList implements InterfaceListInteractorDatabase {
                 processDownloadPopularMovies()
         );
         asyncTaskDownloadPopular.execute();
-    }
-
-    public void downloadMovieDetails( String movieId, String language ){
-        String URLdownloadMovieDetails =
-                "https://api.themoviedb.org/3/movie/"+ movieId
-                        + "?api_key=" + tmdbApiKey
-                        + "&language=" + language;
-
-        AsyncTaskDownloadJSON asyncTaskDownloadMovieDetails = new AsyncTaskDownloadJSON(
-                URLdownloadMovieDetails,
-                processDownloadMovieDetails()
-        );
-        asyncTaskDownloadMovieDetails.execute();
-    }
-
-    public void downloadMovieVideo( String movieId ){
-        String URLdownloadMovieVideos =
-                "https://api.themoviedb.org/3/movie/"+ movieId
-                        + "/videos?api_key=" + tmdbApiKey;
-
-        AsyncTaskDownloadJSON asyncTaskDownloadMovieDetails = new AsyncTaskDownloadJSON(
-                URLdownloadMovieVideos,
-                processDownloadMovieVideos()
-        );
-        asyncTaskDownloadMovieDetails.execute();
-    }
-
-    private AsyncTaskResponseDownloadJSON processDownloadMovieDetails(){
-        AsyncTaskResponseDownloadJSON asyncTaskResponse = new AsyncTaskResponseDownloadJSON() {
-            @Override
-            public void processResult(JSONObject jsonObject) {
-                if( jsonObject == null ) {
-                    presenterList.notifyDownloadErrorMovieDetails();
-                    return;
-                }
-
-                storeDetailsJsonResult( jsonObject );
-            }
-        };
-        return asyncTaskResponse;
-    }
-
-    private void storeDetailsJsonResult( JSONObject jsonObject ){
-        try {
-            String movieId = jsonObject.getString( context.getString(R.string.JSONObject_TAG_id ) );
-            String budget = jsonObject.getString( context.getString(R.string.JSONObject_TAG_budget ) );
-
-            HashMap <String, String> newDetailEntryArguments = new HashMap<>();
-            newDetailEntryArguments.put( DBConstants.DataDetail.BUDGET, budget);
-
-            DBManager.updateDetailEntry(
-                    context,
-                    InteractorList.this,
-                    newDetailEntryArguments,
-                    movieId
-            );
-        } catch (JSONException e) {
-            presenterList.notifyDownloadErrorMovieDetails();
-        }
-    }
-
-    public void clearPopularMoviesList(){
-        DBManager.clearSummaryEntries(
-                context,
-                this
-        );
     }
 
     private AsyncTaskResponseDownloadJSON processDownloadPopularMovies(){
@@ -191,65 +132,11 @@ public class InteractorList implements InterfaceListInteractorDatabase {
         }
     }
 
-    private AsyncTaskResponseDownloadJSON processDownloadMovieVideos(){
-        AsyncTaskResponseDownloadJSON asyncTaskResponse = new AsyncTaskResponseDownloadJSON(){
-            @Override
-            public void processResult(JSONObject jsonObject) {
-                if( jsonObject == null ) {
-                    presenterList.notifyDownloadErrorMovieDetails();
-                    return;
-                }
-
-                storeVideoJsonResult( jsonObject );
-            }
-        };
-        return asyncTaskResponse;
-    }
-
-    private void storeVideoJsonResult( JSONObject jsonObject ){
-        try {
-            String movieId = jsonObject.getString( context.getString(R.string.JSONObject_TAG_id ) );
-
-            JSONArray videosJsonArray = jsonObject.getJSONArray( context.getString(R.string.JSONArray_TAG_results ) );
-
-
-            if( videosJsonArray.length() == 0 ){
-                presenterList.notifyUpdateSuccessDetail();
-                return;
-            }
-
-            JSONObject firstVideo = videosJsonArray.getJSONObject( 0 );
-            String youtubeVideoKey = firstVideo.getString( context.getString(R.string.JSONObject_TAG_youtubevideo) );
-
-            HashMap <String, String> newDetailEntryArguments = new HashMap<>();
-            newDetailEntryArguments.put( DBConstants.DataDetail.TRAILER_LINK, "https://www.youtube.com/watch?v=" + youtubeVideoKey );
-
-            DBManager.updateDetailEntry(
-                    context,
-                    InteractorList.this,
-                    newDetailEntryArguments,
-                    movieId
-            );
-
-        } catch (JSONException e) {
-            presenterList.notifyDownloadErrorVideo();
-        }
-
-
-    }
 
     public void extractPopularMoviesFromDatabase(){
         DBManager.listSummaryEntries(
                 context,
                 this
-        );
-    }
-
-    public void extractMovieDetailsFromDatabase(String movieId ){
-        DBManager.readDetailEntry(
-                context,
-                InteractorList.this,
-                movieId
         );
     }
 
@@ -312,36 +199,6 @@ public class InteractorList implements InterfaceListInteractorDatabase {
 
     @Override
     public void errorCreateDetail() {
-
-    }
-
-    @Override
-    public void successfulReadDetail(DetailHolder extractedData) {
-        presenterList.notifyExtractionSuccessMovieDetails( extractedData );
-    }
-
-    @Override
-    public void errorReadDetail() {
-
-    }
-
-    @Override
-    public void successfulUpdateDetail() {
-        presenterList.notifyUpdateSuccessDetail();
-    }
-
-    @Override
-    public void errorUpdateDetail() {
-
-    }
-
-    @Override
-    public void successfulDeleteDetail() {
-
-    }
-
-    @Override
-    public void errorDeleteDetail() {
 
     }
 }

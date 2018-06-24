@@ -6,8 +6,7 @@ import android.os.AsyncTask;
 
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBConstants;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBHelper;
-import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBManager;
-import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListInteractorDatabase;
+import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceDetailInteractorDatabase;
 
 /**
  * Tarea asíncrona para eliminar una entrada en la tabla detalle de la base de datos
@@ -18,14 +17,14 @@ import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListInteractorDa
  */
 public class AsyncTaskDeleteDetail extends AsyncTask<Void, Void, Boolean>  {
 
-    private InterfaceListInteractorDatabase interactorList;
+    private InterfaceDetailInteractorDatabase interactorDetail;
     private Context context;
     private SQLiteDatabase db;
 
     private String idEntry;
 
-    public AsyncTaskDeleteDetail(Context context, InterfaceListInteractorDatabase interactorList, String idEntry){
-        this.interactorList = interactorList;
+    public AsyncTaskDeleteDetail(Context context, InterfaceDetailInteractorDatabase interactorDetail, String idEntry){
+        this.interactorDetail = interactorDetail;
         this.context = context;
         this.idEntry = idEntry;
     }
@@ -55,9 +54,9 @@ public class AsyncTaskDeleteDetail extends AsyncTask<Void, Void, Boolean>  {
         if( db.isOpen() ) db.close();
 
         if( result ){
-            interactorList.successfulDeleteDetail();
+            interactorDetail.successfulDeleteDetail();
         }else{
-            interactorList.errorDeleteDetail();
+            interactorDetail.errorDeleteDetail();
         }
     }
 }

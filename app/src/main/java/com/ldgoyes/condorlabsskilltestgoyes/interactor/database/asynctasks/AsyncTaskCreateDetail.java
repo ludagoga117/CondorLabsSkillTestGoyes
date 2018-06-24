@@ -7,7 +7,7 @@ import android.os.AsyncTask;
 
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBConstants;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBHelper;
-import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBManager;
+import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceDetailInteractorDatabase;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListInteractorDatabase;
 
 import java.util.HashMap;

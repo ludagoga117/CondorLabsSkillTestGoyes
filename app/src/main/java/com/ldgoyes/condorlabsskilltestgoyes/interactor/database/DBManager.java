@@ -12,6 +12,7 @@ import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.Async
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.AsyncTaskReadSummary;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.AsyncTaskUpdateDetail;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.SummaryHolder;
+import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceDetailInteractorDatabase;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListInteractorDatabase;
 
 import org.json.JSONArray;
@@ -39,12 +40,12 @@ public class DBManager {
         return correctArguments;
     }
 
-    public static void readSummaryEntry(final Context context, InterfaceListInteractorDatabase interactorList, String idEntry){
+    public static void readSummaryEntry(final Context context, InterfaceListInteractorDatabase interactorList, String movieId){
         AsyncTaskReadSummary dataExtractionAsyncTask =
                 new AsyncTaskReadSummary(
                         context,
                         interactorList,
-                        idEntry
+                        movieId
                 );
         dataExtractionAsyncTask.execute();
     }
@@ -90,21 +91,21 @@ public class DBManager {
         return correctArguments;
     }
 
-    public static void readDetailEntry(final Context context, InterfaceListInteractorDatabase interactorList, String idEntry){
+    public static void readDetailEntry(final Context context, InterfaceDetailInteractorDatabase interactorDetail, String idEntry){
         AsyncTaskReadDetail dataExtractionAsyncTask =
                 new AsyncTaskReadDetail(
                         context,
-                        interactorList,
+                        interactorDetail,
                         idEntry
                 );
         dataExtractionAsyncTask.execute();
     }
 
-    public static boolean updateDetailEntry(final Context context, InterfaceListInteractorDatabase interactorList, HashMap<String, String> asyncTaskArguments, String movieIdEntry){
+    public static boolean updateDetailEntry(final Context context, InterfaceDetailInteractorDatabase interactorDetail, HashMap<String, String> asyncTaskArguments, String movieIdEntry){
         AsyncTaskUpdateDetail dataInsertionAsyncTask =
                 new AsyncTaskUpdateDetail(
                         context,
-                        interactorList,
+                        interactorDetail,
                         movieIdEntry
                 );
         boolean correctArguments = dataInsertionAsyncTask.setContentValues( asyncTaskArguments );
@@ -112,11 +113,11 @@ public class DBManager {
         return correctArguments;
     }
 
-    public static void deleteDetailEntry(final Context context, InterfaceListInteractorDatabase interactorList, HashMap<String, String> asyncTaskArguments, String idEntry){
+    public static void deleteDetailEntry(final Context context, InterfaceDetailInteractorDatabase interactorDetail, HashMap<String, String> asyncTaskArguments, String idEntry){
         AsyncTaskDeleteDetail dataInsertionAsyncTask =
                 new AsyncTaskDeleteDetail(
                         context,
-                        interactorList,
+                        interactorDetail,
                         idEntry
                 );
         dataInsertionAsyncTask.execute();

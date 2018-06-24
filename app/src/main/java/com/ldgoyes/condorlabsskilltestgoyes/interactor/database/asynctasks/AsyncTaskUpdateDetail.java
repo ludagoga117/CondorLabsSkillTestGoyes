@@ -7,7 +7,7 @@ import android.os.AsyncTask;
 
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBConstants;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBHelper;
-import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListInteractorDatabase;
+import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceDetailInteractorDatabase;
 
 import java.util.HashMap;
 
@@ -20,7 +20,7 @@ import java.util.HashMap;
  */
 public class AsyncTaskUpdateDetail extends AsyncTask<Void, Void, Boolean>  {
 
-    private InterfaceListInteractorDatabase interactorList;
+    private InterfaceDetailInteractorDatabase interactorDetail;
     private Context context;
     private SQLiteDatabase db;
 
@@ -36,8 +36,8 @@ public class AsyncTaskUpdateDetail extends AsyncTask<Void, Void, Boolean>  {
     private ContentValues contentValues;
     private String movieIdEntry;
 
-    public AsyncTaskUpdateDetail(Context context, InterfaceListInteractorDatabase interactorList, String movieIdEntry){
-        this.interactorList = interactorList;
+    public AsyncTaskUpdateDetail(Context context, InterfaceDetailInteractorDatabase interactorDetail, String movieIdEntry){
+        this.interactorDetail = interactorDetail;
         this.context = context;
         this.contentValues = null;
         this.movieIdEntry = movieIdEntry;
@@ -92,9 +92,9 @@ public class AsyncTaskUpdateDetail extends AsyncTask<Void, Void, Boolean>  {
         if( db.isOpen() ) db.close();
 
         if( result ){
-            interactorList.successfulUpdateDetail();
+            interactorDetail.successfulUpdateDetail();
         }else{
-            interactorList.errorUpdateDetail();
+            interactorDetail.errorUpdateDetail();
         }
     }
 }
