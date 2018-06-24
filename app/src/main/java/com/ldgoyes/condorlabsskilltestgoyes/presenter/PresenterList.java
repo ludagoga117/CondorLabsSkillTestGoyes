@@ -50,7 +50,6 @@ public class PresenterList implements InterfaceListPresenterInteractor{
 
     @Override
     public void notifyDownloadSuccessPopularMovies() {
-        Log.d( context.getString(R.string.debug_tag), "PresenterList - notifyDownloadSuccessPopularMovies");
         interactorList.extractPopularMoviesFromDatabase();
     }
 
@@ -64,14 +63,11 @@ public class PresenterList implements InterfaceListPresenterInteractor{
 
     @Override
     public void notifySuccessClearTableSummary() {
-        Log.d( context.getString(R.string.debug_tag), "PresenterList - notifySuccessClearTableSummary");
     }
 
     @Override
     public void notifyExtractionSuccessPopularMovies(SummaryHolder[] extractedData) {
-        Log.d( context.getString(R.string.debug_tag), "PresenterList - notifyExtractionSuccessPopularMovies. Number of extracted entries: " + Integer.toString(extractedData.length) );
         for( SummaryHolder summaryObject : extractedData ){
-            Log.d( context.getString(R.string.debug_tag), "(id/name): ("+ summaryObject.movieId + "/" + summaryObject.movieName +")");
 
             // TODO borrar estos metodos. Solo se deben llamar si se requieren los detalles. De lo contrario, no
             remainingUpdates = 2;
@@ -86,9 +82,6 @@ public class PresenterList implements InterfaceListPresenterInteractor{
         String trailerLink = extractedData.trailerLink;
         String budget = extractedData.budget;
 
-        Log.d( context.getString(R.string.debug_tag), "(movieId): ("+ movieId + ")");
-        Log.d( context.getString(R.string.debug_tag), "(trailerLink): ("+ trailerLink + ")");
-        Log.d( context.getString(R.string.debug_tag), "(budget): ("+ budget + ")");
     }
 
 

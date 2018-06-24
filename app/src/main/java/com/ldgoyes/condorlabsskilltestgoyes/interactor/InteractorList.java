@@ -134,7 +134,6 @@ public class InteractorList implements InterfaceListInteractorDatabase {
     private void storePopularMoviesJsonResult( JSONObject jsonObject ){
         try {
             JSONArray moviesJsonArray = jsonObject.getJSONArray( context.getString(R.string.JSONArray_TAG_results) );
-            //Log.d( context.getString(R.string.debug_tag), moviesJsonArray.toString() );
 
             remainingMoviesToStore = moviesJsonArray.length();
             for( int i = 0; i < moviesJsonArray.length(); i++ ){
@@ -162,7 +161,6 @@ public class InteractorList implements InterfaceListInteractorDatabase {
                 newSummaryEntryArguments.put( DBConstants.DataSummary.POSTER_PICTURE_PATH, "http://image.tmdb.org/t/p/w185/"+poster_path.substring(1) );
                 newSummaryEntryArguments.put( DBConstants.DataSummary.VOTE_AVERAGE, voteAverage);
 
-                Log.d( context.getString(R.string.debug_tag), "Storing: " + id + " - " + title );
 
                 DBManager.createSummaryEntry(
                         context,
@@ -216,11 +214,9 @@ public class InteractorList implements InterfaceListInteractorDatabase {
 
 
             if( videosJsonArray.length() == 0 ){
-                Log.d( context.getString(R.string.debug_tag), "movie-id: "+movieId+" - No video" );
                 presenterList.notifyUpdateSuccessDetail();
                 return;
             }
-            //Log.d( context.getString(R.string.debug_tag), "movie-id: "+movieId+" - HAS VIDEO!" );
 
             JSONObject firstVideo = videosJsonArray.getJSONObject( 0 );
             String youtubeVideoKey = firstVideo.getString( context.getString(R.string.JSONObject_TAG_youtubevideo) );
