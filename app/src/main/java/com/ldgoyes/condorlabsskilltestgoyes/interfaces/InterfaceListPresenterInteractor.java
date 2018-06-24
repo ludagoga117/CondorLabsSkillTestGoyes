@@ -1,5 +1,6 @@
 package com.ldgoyes.condorlabsskilltestgoyes.interfaces;
 
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.DetailHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.SummaryHolder;
 
 public interface InterfaceListPresenterInteractor {
@@ -10,4 +11,5 @@ public interface InterfaceListPresenterInteractor {
     void notifyUpdateSuccessDetail();
     void notifySuccessClearTableSummary();
     void notifyExtractionSuccessPopularMovies( SummaryHolder[] extractedData );
+    void notifyExtractionSuccessMovieDetails( DetailHolder extractedData );
 }

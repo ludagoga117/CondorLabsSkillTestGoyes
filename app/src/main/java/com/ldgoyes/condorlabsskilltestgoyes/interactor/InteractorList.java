@@ -66,7 +66,7 @@ public class InteractorList implements InterfaceListInteractorDatabase {
     public void downloadMovieVideo( String movieId ){
         String URLdownloadMovieVideos =
                 "https://api.themoviedb.org/3/movie/"+ movieId
-                        + "/videos";
+                        + "/videos?api_key=" + tmdbApiKey;
 
         AsyncTaskDownloadJSON asyncTaskDownloadMovieDetails = new AsyncTaskDownloadJSON(
                 URLdownloadMovieVideos,
@@ -216,10 +216,11 @@ public class InteractorList implements InterfaceListInteractorDatabase {
 
 
             if( videosJsonArray.length() == 0 ){
-                Log.d( context.getString(R.string.debug_tag), "No video" );
+                Log.d( context.getString(R.string.debug_tag), "movie-id: "+movieId+" - No video" );
                 presenterList.notifyUpdateSuccessDetail();
                 return;
             }
+            //Log.d( context.getString(R.string.debug_tag), "movie-id: "+movieId+" - HAS VIDEO!" );
 
             JSONObject firstVideo = videosJsonArray.getJSONObject( 0 );
             String youtubeVideoKey = firstVideo.getString( context.getString(R.string.JSONObject_TAG_youtubevideo) );
@@ -245,6 +246,14 @@ public class InteractorList implements InterfaceListInteractorDatabase {
         DBManager.listSummaryEntries(
                 context,
                 this
+        );
+    }
+
+    public void extractMovieDetailsFromDatabase(String movieId ){
+        DBManager.readDetailEntry(
+                context,
+                InteractorList.this,
+                movieId
         );
     }
 
@@ -312,7 +321,7 @@ public class InteractorList implements InterfaceListInteractorDatabase {
 
     @Override
     public void successfulReadDetail(DetailHolder extractedData) {
-
+        presenterList.notifyExtractionSuccessMovieDetails( extractedData );
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.ldgoyes.condorlabsskilltestgoyes.R;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.InteractorList;
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.DetailHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.SummaryHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListPresenterInteractor;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListPresenterView;
@@ -56,7 +57,8 @@ public class PresenterList implements InterfaceListPresenterInteractor{
     @Override
     public synchronized void notifyUpdateSuccessDetail() {
         if( --remainingUpdates == 0 ){
-            
+            // TODO borrar este metodo. Solo se debe llamar si se requieren los detalles. De lo contrario, no.
+            interactorList.extractMovieDetailsFromDatabase( "297762" );
         }
     }
 
@@ -71,13 +73,22 @@ public class PresenterList implements InterfaceListPresenterInteractor{
         for( SummaryHolder summaryObject : extractedData ){
             Log.d( context.getString(R.string.debug_tag), "(id/name): ("+ summaryObject.movieId + "/" + summaryObject.movieName +")");
 
-            // TODO borrar este metodo. Solo se debe llamar si se requieren los detalles. De lo contrario, no
+            // TODO borrar estos metodos. Solo se deben llamar si se requieren los detalles. De lo contrario, no
             remainingUpdates = 2;
             interactorList.downloadMovieDetails( summaryObject.movieId, tmdbPopularMoviesLanguage );
             interactorList.downloadMovieVideo( summaryObject.movieId );
         }
+    }
 
+    @Override
+    public void notifyExtractionSuccessMovieDetails(DetailHolder extractedData) {
+        String movieId = extractedData.movieId;
+        String trailerLink = extractedData.trailerLink;
+        String budget = extractedData.budget;
 
+        Log.d( context.getString(R.string.debug_tag), "(movieId): ("+ movieId + ")");
+        Log.d( context.getString(R.string.debug_tag), "(trailerLink): ("+ trailerLink + ")");
+        Log.d( context.getString(R.string.debug_tag), "(budget): ("+ budget + ")");
     }
 
 
