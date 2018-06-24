@@ -93,6 +93,13 @@ public class InteractorList implements InterfaceListInteractorDatabase {
         return asyncTaskResponse;
     }
 
+    public void clearPopularMoviesList(){
+        DBManager.clearSummaryEntries(
+                context,
+                this
+        );
+    }
+
     private void storePopularMoviesJsonResult( JSONObject jsonObject ){
         try {
             JSONArray moviesJsonArray = jsonObject.getJSONArray( context.getString(R.string.JSONArray_TAG_results) );
@@ -116,23 +123,42 @@ public class InteractorList implements InterfaceListInteractorDatabase {
                 String overview = movieJsonObject.getString( context.getString(R.string.JSONObject_TAG_overview ));
                 String releaseDate = movieJsonObject.getString( context.getString(R.string.JSONObject_TAG_release_date ));
 
-                HashMap <String, String> newDbEntryArguments = new HashMap<>();
-                newDbEntryArguments.put( DBConstants.DataSummary.MOVIE_ID, id);
-                newDbEntryArguments.put( DBConstants.DataSummary.MOVIE_NAME, title);
-                newDbEntryArguments.put( DBConstants.DataSummary.POSTER_PICTURE_PATH, poster_path);
-                newDbEntryArguments.put( DBConstants.DataSummary.VOTE_AVERAGE, voteAverage);
+                HashMap <String, String> newSummaryEntryArguments = new HashMap<>();
+                newSummaryEntryArguments.put( DBConstants.DataSummary.MOVIE_ID, id);
+                newSummaryEntryArguments.put( DBConstants.DataSummary.MOVIE_NAME, title);
+                newSummaryEntryArguments.put( DBConstants.DataSummary.POSTER_PICTURE_PATH, poster_path);
+                newSummaryEntryArguments.put( DBConstants.DataSummary.VOTE_AVERAGE, voteAverage);
 
                 DBManager.createSummaryEntry(
                         context,
                         this,
-                        newDbEntryArguments
+                        newSummaryEntryArguments
                 );
+
+                HashMap <String, String> newDetailEntryArguments = new HashMap<>();
+
+                newDetailEntryArguments.put( DBConstants.DataDetail.MOVIE_ID, id);
+                newDetailEntryArguments.put( DBConstants.DataDetail.MOVIE_OVERVIEW, overview);
+                newDetailEntryArguments.put( DBConstants.DataDetail.BUDGET, null);
+                newDetailEntryArguments.put( DBConstants.DataDetail.TRAILER_LINK, null);
+                newDetailEntryArguments.put( DBConstants.DataDetail.IS_FAVORITE, "false");
+
+                DBManager.createDetailEntry(
+                        context,
+                        this,
+                        newSummaryEntryArguments
+                );
+
             }
 
         } catch (JSONException e) {
             presenterList.notifyDownloadErrorMovieDetails();
             return;
         }
+    }
+
+    public void extractPopularMoviesFromDatabase(){
+
     }
 
     @Override
@@ -170,12 +196,12 @@ public class InteractorList implements InterfaceListInteractorDatabase {
 
     @Override
     public void successfulClearSummary() {
-
+        presenterList.notifySuccessClearTableSummary();
     }
 
     @Override
     public void errorClearSummary() {
-
+        presenterList.notifyErrorClearTableSummary();
     }
 
     @Override

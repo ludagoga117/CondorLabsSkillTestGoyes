@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBConstants;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBHelper;
-import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBManager;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListInteractorDatabase;
 
 import java.util.HashMap;
@@ -28,6 +27,7 @@ public class AsyncTaskUpdateDetail extends AsyncTask<Void, Void, Boolean>  {
     public static final String[] acceptedKeys = {
             DBConstants.DataDetail.MOVIE_ID,
             DBConstants.DataDetail.MOVIE_OVERVIEW,
+            DBConstants.DataDetail.RELEASE_DATE,
             DBConstants.DataDetail.BUDGET,
             DBConstants.DataDetail.TRAILER_LINK,
             DBConstants.DataDetail.IS_FAVORITE,

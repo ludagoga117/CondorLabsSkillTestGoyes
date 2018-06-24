@@ -34,6 +34,7 @@ public class PresenterList implements InterfaceListPresenterInteractor{
     }
 
     public void start(){
+        interactorList.clearPopularMoviesList();
         interactorList.downloadPopularMoviesList( tmdbPopularMoviesLanguage, tmdbPopularMoviesPageToQuery );
         /* TODO
         interactorList.downloadMovieDetails( );
@@ -54,5 +55,14 @@ public class PresenterList implements InterfaceListPresenterInteractor{
     @Override
     public void notifyDownloadSuccessPopularMovies() {
         Log.d( context.getString(R.string.debug_tag), "PresenterList - notifyDownloadSuccessPopularMovies");
+        interactorList.extractPopularMoviesFromDatabase();
     }
+
+    @Override
+    public void notifySuccessClearTableSummary() {
+        Log.d( context.getString(R.string.debug_tag), "PresenterList - notifySuccessClearTableSummary");
+    }
+
+    @Override
+    public void notifyErrorClearTableSummary() {}
 }

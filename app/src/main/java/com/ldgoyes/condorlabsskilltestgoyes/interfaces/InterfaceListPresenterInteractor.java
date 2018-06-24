@@ -4,4 +4,6 @@ public interface InterfaceListPresenterInteractor {
     void notifyDownloadErrorPopularMovies();
     void notifyDownloadErrorMovieDetails();
     void notifyDownloadSuccessPopularMovies();
+    void notifySuccessClearTableSummary();
+    void notifyErrorClearTableSummary();
 }

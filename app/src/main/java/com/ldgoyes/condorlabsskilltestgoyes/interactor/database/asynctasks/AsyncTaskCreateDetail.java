@@ -28,6 +28,7 @@ public class AsyncTaskCreateDetail extends AsyncTask<Void, Void, Boolean>  {
     public static final String[] argumentsKeys = {
             DBConstants.DataDetail.MOVIE_ID,
             DBConstants.DataDetail.MOVIE_OVERVIEW,
+            DBConstants.DataDetail.RELEASE_DATE,
             DBConstants.DataDetail.BUDGET,
             DBConstants.DataDetail.TRAILER_LINK,
             DBConstants.DataDetail.IS_FAVORITE,

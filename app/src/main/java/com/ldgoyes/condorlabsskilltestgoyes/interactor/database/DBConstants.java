@@ -10,7 +10,7 @@ public class DBConstants {
 
     public static class General{
         public static final String DATABASE_NAME = "condor_labs_skill_test_goyes.sqlite";
-        public static final int DATABASE_VERSION = 2;
+        public static final int DATABASE_VERSION = 3;
 
         public static final String createTable = " CREATE TABLE ";
         public static final String idAutoincrement = " ( ID INTEGER PRIMARY KEY AUTOINCREMENT,";
@@ -38,6 +38,7 @@ public class DBConstants {
         public static final String TABLE_NAME = "data_detail";
         public static final String MOVIE_ID = "movie_id";
         public static final String MOVIE_OVERVIEW = "movie_overview";
+        public static final String RELEASE_DATE = "release_date";
         public static final String BUDGET = "budget";
         public static final String TRAILER_LINK = "trailer_link";
         public static final String IS_FAVORITE = "is_favorite";
@@ -46,6 +47,7 @@ public class DBConstants {
                 + General.idAutoincrement
                 + DataDetail.MOVIE_ID + General.TEXT
                 + DataDetail.MOVIE_OVERVIEW + General.TEXT
+                + DataDetail.RELEASE_DATE + General.TEXT
                 + DataDetail.BUDGET + General.TEXT
                 + DataDetail.TRAILER_LINK + General.TEXT
                 + DataDetail.IS_FAVORITE + General.TEXT.replace(",",")");

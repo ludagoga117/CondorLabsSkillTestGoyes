@@ -57,6 +57,7 @@ public class AsyncTaskReadDetail extends AsyncTask<Void, Void, DetailHolder> {
                 c.getString( 2 ),
                 c.getString( 3 ),
                 c.getString( 4 ),
+                c.getString( 5 ),
                 c.getString( 5 )
         );
 
