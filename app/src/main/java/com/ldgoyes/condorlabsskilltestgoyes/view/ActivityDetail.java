@@ -17,7 +17,7 @@ public class ActivityDetail extends AppCompatActivity implements InterfaceDetail
         setContentView(R.layout.activity_detail);
 
         String movieId = "297762";
-        
+
         presenterDetail = PresenterDetail.instanceOf(
                 ActivityDetail.this,
                 this,
