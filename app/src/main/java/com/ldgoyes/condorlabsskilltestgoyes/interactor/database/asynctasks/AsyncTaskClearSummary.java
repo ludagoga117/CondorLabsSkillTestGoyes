@@ -37,8 +37,6 @@ public class AsyncTaskClearSummary extends AsyncTask<Void, Void, Boolean> {
     protected void onPostExecute(Boolean result) {
         if( db.isOpen() ) db.close();
 
-        if( !InteractorList.getActiveApp() ) return;
-
         if( result ){
             interactorList.successfulClearSummary();
         }else{
