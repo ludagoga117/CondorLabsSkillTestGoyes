@@ -63,6 +63,59 @@ public class InteractorList implements InterfaceListInteractorDatabase {
         asyncTaskDownloadMovieDetails.execute();
     }
 
+    public void downloadMovieVideo( String movieId ){
+        String URLdownloadMovieVideos =
+                "https://api.themoviedb.org/3/movie/"+ movieId
+                        + "/videos";
+
+        AsyncTaskDownloadJSON asyncTaskDownloadMovieDetails = new AsyncTaskDownloadJSON(
+                URLdownloadMovieVideos,
+                processDownloadMovieVideos()
+        );
+        asyncTaskDownloadMovieDetails.execute();
+    }
+
+    private AsyncTaskResponseDownloadJSON processDownloadMovieDetails(){
+        AsyncTaskResponseDownloadJSON asyncTaskResponse = new AsyncTaskResponseDownloadJSON() {
+            @Override
+            public void processResult(JSONObject jsonObject) {
+                if( jsonObject == null ) {
+                    presenterList.notifyDownloadErrorMovieDetails();
+                    return;
+                }
+
+                storeDetailsJsonResult( jsonObject );
+            }
+        };
+        return asyncTaskResponse;
+    }
+
+    private void storeDetailsJsonResult( JSONObject jsonObject ){
+        try {
+            String movieId = jsonObject.getString( context.getString(R.string.JSONObject_TAG_id ) );
+            String budget = jsonObject.getString( context.getString(R.string.JSONObject_TAG_budget ) );
+
+            HashMap <String, String> newDetailEntryArguments = new HashMap<>();
+            newDetailEntryArguments.put( DBConstants.DataDetail.BUDGET, budget);
+
+            DBManager.updateDetailEntry(
+                    context,
+                    InteractorList.this,
+                    newDetailEntryArguments,
+                    movieId
+            );
+        } catch (JSONException e) {
+            presenterList.notifyDownloadErrorMovieDetails();
+        }
+    }
+
+    public void clearPopularMoviesList(){
+        DBManager.clearSummaryEntries(
+                context,
+                this
+        );
+    }
+
     private AsyncTaskResponseDownloadJSON processDownloadPopularMovies(){
         AsyncTaskResponseDownloadJSON asyncTaskResponse = new AsyncTaskResponseDownloadJSON(){
             @Override
@@ -76,28 +129,6 @@ public class InteractorList implements InterfaceListInteractorDatabase {
             }
         };
         return asyncTaskResponse;
-    }
-
-    private AsyncTaskResponseDownloadJSON processDownloadMovieDetails(){
-        AsyncTaskResponseDownloadJSON asyncTaskResponse = new AsyncTaskResponseDownloadJSON() {
-            @Override
-            public void processResult(JSONObject jsonObject) {
-                if( jsonObject == null ) {
-                    presenterList.notifyDownloadErrorMovieDetails();
-                    return;
-                }
-
-                Log.d( context.getString(R.string.debug_tag), jsonObject.toString() );
-            }
-        };
-        return asyncTaskResponse;
-    }
-
-    public void clearPopularMoviesList(){
-        DBManager.clearSummaryEntries(
-                context,
-                this
-        );
     }
 
     private void storePopularMoviesJsonResult( JSONObject jsonObject ){
@@ -128,7 +159,7 @@ public class InteractorList implements InterfaceListInteractorDatabase {
                 newSummaryEntryArguments.put( DBConstants.DataSummary.MOVIE_ID, id);
                 newSummaryEntryArguments.put( DBConstants.DataSummary.VOTE_COUNT, voteCount);
                 newSummaryEntryArguments.put( DBConstants.DataSummary.MOVIE_NAME, title);
-                newSummaryEntryArguments.put( DBConstants.DataSummary.POSTER_PICTURE_PATH, poster_path);
+                newSummaryEntryArguments.put( DBConstants.DataSummary.POSTER_PICTURE_PATH, "http://image.tmdb.org/t/p/w185/"+poster_path.substring(1) );
                 newSummaryEntryArguments.put( DBConstants.DataSummary.VOTE_AVERAGE, voteAverage);
 
                 Log.d( context.getString(R.string.debug_tag), "Storing: " + id + " - " + title );
@@ -144,14 +175,14 @@ public class InteractorList implements InterfaceListInteractorDatabase {
                 newDetailEntryArguments.put( DBConstants.DataDetail.MOVIE_ID, id);
                 newDetailEntryArguments.put( DBConstants.DataDetail.MOVIE_OVERVIEW, overview);
                 newDetailEntryArguments.put( DBConstants.DataDetail.RELEASE_DATE, releaseDate);
-                newDetailEntryArguments.put( DBConstants.DataDetail.BUDGET, null);
-                newDetailEntryArguments.put( DBConstants.DataDetail.TRAILER_LINK, (video.equals("true")) ? context.getString(R.string.has_video_tag) : null);
+                newDetailEntryArguments.put( DBConstants.DataDetail.BUDGET, null );
+                newDetailEntryArguments.put( DBConstants.DataDetail.TRAILER_LINK, null );
                 newDetailEntryArguments.put( DBConstants.DataDetail.IS_FAVORITE, "false");
 
                 DBManager.createDetailEntry(
                         context,
                         this,
-                        newSummaryEntryArguments
+                        newDetailEntryArguments
                 );
 
             }
@@ -160,6 +191,54 @@ public class InteractorList implements InterfaceListInteractorDatabase {
             presenterList.notifyDownloadErrorMovieDetails();
             return;
         }
+    }
+
+    private AsyncTaskResponseDownloadJSON processDownloadMovieVideos(){
+        AsyncTaskResponseDownloadJSON asyncTaskResponse = new AsyncTaskResponseDownloadJSON(){
+            @Override
+            public void processResult(JSONObject jsonObject) {
+                if( jsonObject == null ) {
+                    presenterList.notifyDownloadErrorMovieDetails();
+                    return;
+                }
+
+                storeVideoJsonResult( jsonObject );
+            }
+        };
+        return asyncTaskResponse;
+    }
+
+    private void storeVideoJsonResult( JSONObject jsonObject ){
+        try {
+            String movieId = jsonObject.getString( context.getString(R.string.JSONObject_TAG_id ) );
+
+            JSONArray videosJsonArray = jsonObject.getJSONArray( context.getString(R.string.JSONArray_TAG_results ) );
+
+
+            if( videosJsonArray.length() == 0 ){
+                Log.d( context.getString(R.string.debug_tag), "No video" );
+                presenterList.notifyUpdateSuccessDetail();
+                return;
+            }
+
+            JSONObject firstVideo = videosJsonArray.getJSONObject( 0 );
+            String youtubeVideoKey = firstVideo.getString( context.getString(R.string.JSONObject_TAG_youtubevideo) );
+
+            HashMap <String, String> newDetailEntryArguments = new HashMap<>();
+            newDetailEntryArguments.put( DBConstants.DataDetail.TRAILER_LINK, "https://www.youtube.com/watch?v=" + youtubeVideoKey );
+
+            DBManager.updateDetailEntry(
+                    context,
+                    InteractorList.this,
+                    newDetailEntryArguments,
+                    movieId
+            );
+
+        } catch (JSONException e) {
+            presenterList.notifyDownloadErrorVideo();
+        }
+
+
     }
 
     public void extractPopularMoviesFromDatabase(){
@@ -182,10 +261,14 @@ public class InteractorList implements InterfaceListInteractorDatabase {
     }
 
     @Override
-    public void successfulReadSummary(SummaryHolder extractedData) {}
+    public void successfulReadSummary(SummaryHolder extractedData) {
+
+    }
 
     @Override
-    public void errorReadSummary() {}
+    public void errorReadSummary() {
+
+    }
 
     @Override
     public void successfulListSummary(SummaryHolder[] extractedData) {
@@ -204,7 +287,7 @@ public class InteractorList implements InterfaceListInteractorDatabase {
 
     @Override
     public void errorClearSummary() {
-        presenterList.notifyErrorClearTableSummary();
+
     }
 
     @Override
@@ -239,7 +322,7 @@ public class InteractorList implements InterfaceListInteractorDatabase {
 
     @Override
     public void successfulUpdateDetail() {
-
+        presenterList.notifyUpdateSuccessDetail();
     }
 
     @Override

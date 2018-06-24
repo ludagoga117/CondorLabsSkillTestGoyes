@@ -34,13 +34,13 @@ public class AsyncTaskUpdateDetail extends AsyncTask<Void, Void, Boolean>  {
     };
 
     private ContentValues contentValues;
-    private String idEntry;
+    private String movieIdEntry;
 
-    public AsyncTaskUpdateDetail(Context context, InterfaceListInteractorDatabase interactorList, String idEntry){
+    public AsyncTaskUpdateDetail(Context context, InterfaceListInteractorDatabase interactorList, String movieIdEntry){
         this.interactorList = interactorList;
         this.context = context;
         this.contentValues = null;
-        this.idEntry = idEntry;
+        this.movieIdEntry = movieIdEntry;
     }
 
     public boolean setContentValues( HashMap<String, String> arguments ){
@@ -74,8 +74,8 @@ public class AsyncTaskUpdateDetail extends AsyncTask<Void, Void, Boolean>  {
         long insertResult = db.update(
                 DBConstants.DataDetail.TABLE_NAME,
                 contentValues,
-                DBConstants.General.id+"=?",
-                new String[]{idEntry}
+                DBConstants.DataDetail.MOVIE_ID+"=?",
+                new String[]{movieIdEntry}
         );
 
         db.close();

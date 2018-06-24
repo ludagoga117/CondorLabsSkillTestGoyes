@@ -18,6 +18,7 @@ public class PresenterList implements InterfaceListPresenterInteractor{
     private String tmdbPopularMoviesLanguage;
     private String tmdbPopularMoviesPageToQuery;
 
+    private int remainingUpdates;
 
     public PresenterList ( Context context, InterfaceListPresenterView activityList ){
         this.context = context;
@@ -28,6 +29,7 @@ public class PresenterList implements InterfaceListPresenterInteractor{
         );
         this.tmdbPopularMoviesLanguage = context.getString( R.string.default_tmdb_popular_movies_language );
         this.tmdbPopularMoviesPageToQuery = context.getString( R.string.default_tmdb_popular_movies_page_to_query );
+        this.remainingUpdates = 0;
     }
 
     public static PresenterList instanceOf ( Context context, InterfaceListPresenterView activityList ){
@@ -37,9 +39,6 @@ public class PresenterList implements InterfaceListPresenterInteractor{
     public void start(){
         interactorList.clearPopularMoviesList();
         interactorList.downloadPopularMoviesList( tmdbPopularMoviesLanguage, tmdbPopularMoviesPageToQuery );
-        /* TODO
-        interactorList.downloadMovieDetails( );
-        */
     }
 
 
@@ -55,6 +54,13 @@ public class PresenterList implements InterfaceListPresenterInteractor{
     }
 
     @Override
+    public synchronized void notifyUpdateSuccessDetail() {
+        if( --remainingUpdates == 0 ){
+            
+        }
+    }
+
+    @Override
     public void notifySuccessClearTableSummary() {
         Log.d( context.getString(R.string.debug_tag), "PresenterList - notifySuccessClearTableSummary");
     }
@@ -64,7 +70,13 @@ public class PresenterList implements InterfaceListPresenterInteractor{
         Log.d( context.getString(R.string.debug_tag), "PresenterList - notifyExtractionSuccessPopularMovies. Number of extracted entries: " + Integer.toString(extractedData.length) );
         for( SummaryHolder summaryObject : extractedData ){
             Log.d( context.getString(R.string.debug_tag), "(id/name): ("+ summaryObject.movieId + "/" + summaryObject.movieName +")");
+
+            // TODO borrar este metodo. Solo se debe llamar si se requieren los detalles. De lo contrario, no
+            remainingUpdates = 2;
+            interactorList.downloadMovieDetails( summaryObject.movieId, tmdbPopularMoviesLanguage );
+            interactorList.downloadMovieVideo( summaryObject.movieId );
         }
+
 
     }
 
@@ -73,5 +85,5 @@ public class PresenterList implements InterfaceListPresenterInteractor{
     public void notifyDownloadErrorMovieDetails() {}
 
     @Override
-    public void notifyErrorClearTableSummary() {}
+    public void notifyDownloadErrorVideo() {}
 }

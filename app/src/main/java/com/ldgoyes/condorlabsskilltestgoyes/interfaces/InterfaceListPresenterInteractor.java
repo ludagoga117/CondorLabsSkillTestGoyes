@@ -5,8 +5,9 @@ import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.SummaryH
 public interface InterfaceListPresenterInteractor {
     void notifyDownloadErrorPopularMovies();
     void notifyDownloadErrorMovieDetails();
+    void notifyDownloadErrorVideo();
     void notifyDownloadSuccessPopularMovies();
+    void notifyUpdateSuccessDetail();
     void notifySuccessClearTableSummary();
-    void notifyErrorClearTableSummary();
     void notifyExtractionSuccessPopularMovies( SummaryHolder[] extractedData );
 }

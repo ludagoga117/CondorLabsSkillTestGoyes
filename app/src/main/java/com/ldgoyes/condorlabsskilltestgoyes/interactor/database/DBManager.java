@@ -100,12 +100,12 @@ public class DBManager {
         dataExtractionAsyncTask.execute();
     }
 
-    public static boolean updateDetailEntry(final Context context, InterfaceListInteractorDatabase interactorList, HashMap<String, String> asyncTaskArguments, String idEntry){
+    public static boolean updateDetailEntry(final Context context, InterfaceListInteractorDatabase interactorList, HashMap<String, String> asyncTaskArguments, String movieIdEntry){
         AsyncTaskUpdateDetail dataInsertionAsyncTask =
                 new AsyncTaskUpdateDetail(
                         context,
                         interactorList,
-                        idEntry
+                        movieIdEntry
                 );
         boolean correctArguments = dataInsertionAsyncTask.setContentValues( asyncTaskArguments );
         if( correctArguments ) dataInsertionAsyncTask.execute();
