@@ -82,8 +82,10 @@ public class AsyncTaskCreateSummary extends AsyncTask<Void, Void, Boolean>  {
 
         if( !DBManager.getActiveApp() ) return;
 
-        // TODO
-        // result == true -> success
-        // result == false -> fail
+        if( result ){
+            interactorList.successfulCreateSummary();
+        }else{
+            interactorList.errorCreateSummary();
+        }
     }
 }
