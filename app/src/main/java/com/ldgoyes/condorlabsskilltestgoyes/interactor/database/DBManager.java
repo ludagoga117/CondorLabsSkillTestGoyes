@@ -5,6 +5,8 @@ import android.content.Context;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.AsyncTaskCreateSummary;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListInteractorDatabase;
 
+import java.util.HashMap;
+
 /**
  * Desde esta clase se administran los llamados a las tareas asíncronas
  * que escriben en la base de datos.
@@ -13,13 +15,23 @@ import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListInteractorDa
  * @version 1.0.0
  */
 public class DBManager {
+    private static boolean activeApp = false;
 
-    public static void createSummaryEntry(final Context context, InterfaceListInteractorDatabase interactorList){
+    public synchronized static void setActiveApp ( boolean setValue ){
+        activeApp = setValue;
+    }
+    public static boolean getActiveApp (){
+        return activeApp;
+    }
+
+    public static boolean createSummaryEntry(final Context context, InterfaceListInteractorDatabase interactorList, HashMap<String, String> asyncTaskArguments){
         AsyncTaskCreateSummary dataInsertionAsyncTask =
                 new AsyncTaskCreateSummary(
                         context,
                         interactorList
                 );
-        dataInsertionAsyncTask.execute();
+        boolean correctArguments = dataInsertionAsyncTask.setContentValues( asyncTaskArguments );
+        if( correctArguments ) dataInsertionAsyncTask.execute();
+        return correctArguments;
     }
 }
