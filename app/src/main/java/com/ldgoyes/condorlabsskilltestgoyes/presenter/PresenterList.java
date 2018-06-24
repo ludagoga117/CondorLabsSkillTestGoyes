@@ -37,4 +37,8 @@ public class PresenterList implements InterfaceListPresenterInteractor{
     }
 
 
+    @Override
+    public void notifyDownloadErrorPopularMovies() {
+
+    }
 }

@@ -3,4 +3,5 @@
     <string name="tmdb_api_key">b844f44d1b5a8c2163a76f3dc6bd33bf</string>
     <string name="default_tmdb_popular_movies_language">en-US</string>
     <string name="default_tmdb_popular_movies_page_to_query">1</string>
+    <string name="debug_tag">GOYES</string>
 </resources>

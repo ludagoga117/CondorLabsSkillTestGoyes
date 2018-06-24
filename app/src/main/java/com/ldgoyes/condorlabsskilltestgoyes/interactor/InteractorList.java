@@ -1,13 +1,17 @@
 package com.ldgoyes.condorlabsskilltestgoyes.interactor;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.ldgoyes.condorlabsskilltestgoyes.R;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.DetailHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.SummaryHolder;
-import com.ldgoyes.condorlabsskilltestgoyes.interactor.webresources.asynctasks.AsyncTaskDownloadPopular;
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.webresources.asynctasks.AsyncTaskDownloadJSON;
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.webresources.asynctasks.AsyncTaskResponseDownloadJSON;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListInteractorDatabase;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListPresenterInteractor;
+
+import org.json.JSONObject;
 
 public class InteractorList implements InterfaceListInteractorDatabase {
     private Context context;
@@ -26,23 +30,32 @@ public class InteractorList implements InterfaceListInteractorDatabase {
     }
 
     public void downloadPopularMoviesList( String language, String pageToQuery ){
-        AsyncTaskDownloadPopular asyncTaskDownloadPopular =
-                new AsyncTaskDownloadPopular(
-                        tmdbApiKey,
-                        language,
-                        pageToQuery
-                        );
+        String URLdownloadPopularMovies =
+                "https://api.themoviedb.org/3/movie/popular?api_key=" + tmdbApiKey
+                    + "&language=" + language
+                    + "&page=" + pageToQuery;
+
+        AsyncTaskDownloadJSON asyncTaskDownloadPopular = new AsyncTaskDownloadJSON(
+                URLdownloadPopularMovies,
+                processDownloadPopularMovies()
+        );
         asyncTaskDownloadPopular.execute();
     }
 
+    private AsyncTaskResponseDownloadJSON processDownloadPopularMovies(){
+        AsyncTaskResponseDownloadJSON asyncTaskResponse = new AsyncTaskResponseDownloadJSON(){
+            @Override
+            public void processResult(JSONObject jsonObject) {
+                if( jsonObject == null ) {
+                    presenterList.notifyDownloadErrorPopularMovies();
+                    return;
+                }
 
-
-
-
-
-
-
-
+                Log.d( context.getString(R.string.debug_tag), jsonObject.toString() );
+            }
+        };
+        return asyncTaskResponse;
+    }
 
     @Override
     public void successfulCreateSummary() {
