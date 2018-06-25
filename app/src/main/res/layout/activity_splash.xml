@@ -13,7 +13,7 @@
 
         android:text="@string/signature_goyes"
         android:textSize="@dimen/big_text"
-        android:textColor="@color/red"
+        android:textColor="@color/black"
         android:textStyle="bold|italic"
 
         app:layout_constraintTop_toTopOf="parent"
