@@ -35,6 +35,8 @@
     <string name="activitydetail_budget">Budget</string>
     <string name="activitydetail_budget_example">14\'000.000 USD</string>
     <string name="activitydetail_voteaverage">0.0</string>
+    <string name="preference_file_key">condor_goyes</string>
+    <string name="preference_last_download">last_download</string>
 
 
 </resources>

@@ -1,7 +1,9 @@
 package com.ldgoyes.condorlabsskilltestgoyes.presenter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.ldgoyes.condorlabsskilltestgoyes.R;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.InteractorList;
@@ -12,8 +14,10 @@ import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListPresenterRVA
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListPresenterView;
 import com.ldgoyes.condorlabsskilltestgoyes.view.adapters.AdapterRecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 public class PresenterList implements InterfaceListPresenterInteractor, InterfaceListPresenterRVAdapter {
@@ -52,13 +56,39 @@ public class PresenterList implements InterfaceListPresenterInteractor, Interfac
     }
 
     public void start(){
-        interactorList.clearPopularMoviesList();
-        interactorList.clearDetailTable();
-        interactorList.downloadPopularMoviesList( tmdbPopularMoviesLanguage, tmdbPopularMoviesPageToQuery );
+        String timeStamp = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
+        /* Según la documentación, la api actualiza la lista de peliculas diariamente, por eso,
+        si sigue siendo el mismo día no vale la pena volver a descargar */
+
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                context.getString(R.string.preference_file_key),
+                Context.MODE_PRIVATE
+        );
+        if( !sharedPref.getString(
+                context.getString(R.string.preference_last_download),
+                "").equals(timeStamp)
+        ){
+            interactorList.clearPopularMoviesList();
+            interactorList.clearDetailTable();
+            interactorList.downloadPopularMoviesList( tmdbPopularMoviesLanguage, tmdbPopularMoviesPageToQuery );
+        }else{
+            interactorList.extractPopularMoviesFromDatabase();
+        }
     }
 
     @Override
     public void notifyDownloadSuccessPopularMovies() {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
+
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                context.getString(R.string.preference_file_key),
+                Context.MODE_PRIVATE
+        );
+        sharedPref.edit().putString(
+                context.getString(R.string.preference_last_download),
+                timeStamp
+        ).commit();
+
         interactorList.extractPopularMoviesFromDatabase();
     }
 
