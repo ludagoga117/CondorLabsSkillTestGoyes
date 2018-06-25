@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import com.ldgoyes.condorlabsskilltestgoyes.R;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBConstants;
@@ -31,6 +33,22 @@ public class ActivityList extends AppCompatActivity implements InterfaceListPres
                 this
         );
         presenterList.start();
+
+        CheckBox filterGreaterThan2000 = (CheckBox) findViewById(R.id.activitylist_checkbox_votecounter);
+        filterGreaterThan2000.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                presenterList.applyFilterGreaterThan2000( isChecked );
+            }
+        });
+
+        CheckBox filterOnlyFav = (CheckBox) findViewById(R.id.activitylist_checkbox_onlyfav);
+        filterOnlyFav.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                presenterList.applyFilterOnlyFav( isChecked );
+            }
+        });
     }
 
     @Override

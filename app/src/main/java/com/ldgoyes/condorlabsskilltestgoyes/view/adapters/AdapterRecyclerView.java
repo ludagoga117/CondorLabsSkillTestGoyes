@@ -21,6 +21,10 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
     private InterfaceListPresenterRVAdapter presenterList;
     private List<PairStringBitmap> imagesToShow;
 
+    public void setData( SummaryHolder[] data ){
+        this.data = data;
+    }
+
     public AdapterRecyclerView(SummaryHolder[] data, InterfaceListPresenterRVAdapter presenterList) {
         this.data = data;
         this.presenterList = presenterList;
