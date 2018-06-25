@@ -12,18 +12,19 @@ import com.ldgoyes.condorlabsskilltestgoyes.R;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.SummaryHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListPresenterRVAdapter;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerView.Holder> {
 
     private SummaryHolder[] data;
     private InterfaceListPresenterRVAdapter presenterList;
-    private HashMap<String,Bitmap> imagesToShow;
+    private List<PairStringBitmap> imagesToShow;
 
     public AdapterRecyclerView(SummaryHolder[] data, InterfaceListPresenterRVAdapter presenterList) {
         this.data = data;
         this.presenterList = presenterList;
-        this.imagesToShow = new HashMap<>();
+        this.imagesToShow = new ArrayList<>();
     }
 
     public static class Holder extends RecyclerView.ViewHolder {
@@ -40,11 +41,11 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
     }
 
     public void addImageToShow( String movieId, Bitmap image ){
-        imagesToShow.put( movieId, image );
+        imagesToShow.add( new PairStringBitmap(movieId, image) );
     }
 
     public void clearImagesToShow(){
-        imagesToShow = new HashMap<>();
+        imagesToShow = new ArrayList<>();
     }
 
     @Override
@@ -64,12 +65,21 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
                 presenterList.recyclerviewNotifyItemSelected( position );
             }
         });
-        if( imagesToShow.containsKey( data[position].movieId ) ){
-            Bitmap imageToShow = imagesToShow.get( data[position].movieId );
+        Bitmap imageToShow = getBitmapFromKey( data[position].movieId );
+        if( imageToShow != null ){
             holder.imageViewPoster.setImageBitmap( imageToShow );
         }
         holder.textViewTitle.setText( data[position].movieName );
         holder.textViewVoteAverage.setText( data[position].voteAverage );
+    }
+
+    private Bitmap getBitmapFromKey( String movieId ){
+        for( PairStringBitmap imageToShow : imagesToShow ){
+            if( imageToShow.movieId.equals(movieId) ){
+                return imageToShow.bitmap;
+            }
+        }
+        return null;
     }
 
     @Override

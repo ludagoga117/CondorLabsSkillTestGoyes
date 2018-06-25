@@ -1,6 +1,7 @@
 package com.ldgoyes.condorlabsskilltestgoyes.interactor;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.ldgoyes.condorlabsskilltestgoyes.R;
@@ -8,7 +9,9 @@ import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBConstants;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBManager;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.DetailHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.SummaryHolder;
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.webresources.asynctasks.AsyncTaskDownloadBitmap;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.webresources.asynctasks.AsyncTaskDownloadJSON;
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.webresources.asynctasks.AsyncTaskResponseDownloadBitmap;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.webresources.asynctasks.AsyncTaskResponseDownloadJSON;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListInteractorDatabase;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListPresenterInteractor;
@@ -42,6 +45,26 @@ public class InteractorList implements InterfaceListInteractorDatabase {
                 context,
                 this
         );
+    }
+
+    public void downloadImage( String movieId, String URLdownloadImage ){
+        AsyncTaskDownloadBitmap asyncTaskDownloadBitmap = new AsyncTaskDownloadBitmap(
+                URLdownloadImage,
+                processDownloadImage(movieId)
+        );
+        asyncTaskDownloadBitmap.execute();
+    }
+
+    private AsyncTaskResponseDownloadBitmap processDownloadImage(final String movieId ){
+        AsyncTaskResponseDownloadBitmap asyncTaskResponseDownloadBitmap = new AsyncTaskResponseDownloadBitmap() {
+            @Override
+            public void processResult(Bitmap image) {
+                if( image != null ){
+                    presenterList.notifyDownloadSuccessImage( movieId, image );
+                }
+            }
+        };
+        return asyncTaskResponseDownloadBitmap;
     }
 
     public void downloadPopularMoviesList( String language, String pageToQuery ){

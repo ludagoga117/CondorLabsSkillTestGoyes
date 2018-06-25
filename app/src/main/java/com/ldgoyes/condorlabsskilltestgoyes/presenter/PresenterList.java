@@ -1,6 +1,7 @@
 package com.ldgoyes.condorlabsskilltestgoyes.presenter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.ldgoyes.condorlabsskilltestgoyes.R;
@@ -52,6 +53,12 @@ public class PresenterList implements InterfaceListPresenterInteractor, Interfac
     }
 
     @Override
+    public void notifyDownloadSuccessImage(String movieId, Bitmap image) {
+        adapterRecyclerView.addImageToShow( movieId, image );
+        adapterRecyclerView.notifyDataSetChanged();
+    }
+
+    @Override
     public void notifyExtractionSuccessPopularMovies(SummaryHolder[] extractedData) {
         this.extractedData = extractedData;
         adapterRecyclerView = new AdapterRecyclerView(
@@ -59,6 +66,10 @@ public class PresenterList implements InterfaceListPresenterInteractor, Interfac
                 this
         );
         activityList.initRecyclerview( adapterRecyclerView );
+
+        for( SummaryHolder summaryObject : extractedData ){
+            interactorList.downloadImage( summaryObject.movieId, summaryObject.posterPicturePath );
+        }
     }
 
 
