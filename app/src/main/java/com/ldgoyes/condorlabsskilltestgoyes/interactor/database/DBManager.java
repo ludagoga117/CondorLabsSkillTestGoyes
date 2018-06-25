@@ -8,6 +8,7 @@ import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.Async
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.AsyncTaskCreateSummary;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.AsyncTaskDeleteDetail;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.AsyncTaskDeleteSummary;
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.AsyncTaskListExtendedSummary;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.AsyncTaskListSummary;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.AsyncTaskReadDetail;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.AsyncTaskReadSummary;
@@ -131,5 +132,16 @@ public class DBManager {
                         interactorList
                 );
         dataRemovalAsyncTask.execute();
+    }
+
+    /* Extended Summary */
+
+    public static void listExtendedSummaryEntries(final Context context, InterfaceListInteractorDatabase interactorList){
+        AsyncTaskListExtendedSummary dataExtractionAsyncTask =
+                new AsyncTaskListExtendedSummary(
+                        context,
+                        interactorList
+                );
+        dataExtractionAsyncTask.execute();
     }
 }

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 
 import com.ldgoyes.condorlabsskilltestgoyes.R;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.InteractorList;
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.ExtendedSummaryHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.SummaryHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListPresenterInteractor;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListPresenterRVAdapter;
@@ -26,7 +27,7 @@ public class PresenterList implements InterfaceListPresenterInteractor, Interfac
 
     private AdapterRecyclerView adapterRecyclerView;
 
-    private SummaryHolder[] extractedData, filteredData;
+    private ExtendedSummaryHolder[] extractedData, filteredData;
 
     private boolean filterVoteCountGreaterThan2000, filterOnlyFav;
 
@@ -71,7 +72,7 @@ public class PresenterList implements InterfaceListPresenterInteractor, Interfac
     }
 
     @Override
-    public void notifyExtractionSuccessPopularMovies(final SummaryHolder[] extractedData) {
+    public void notifyExtractionSuccessPopularMovies(final ExtendedSummaryHolder[] extractedData) {
         this.extractedData = extractedData;
         this.filteredData = applyFilters( extractedData );
 
@@ -87,16 +88,16 @@ public class PresenterList implements InterfaceListPresenterInteractor, Interfac
         }
     }
 
-    private SummaryHolder[] applyFilters( SummaryHolder[] extractedData ){
-        List<SummaryHolder> filteredData = new ArrayList<SummaryHolder>();
+    private ExtendedSummaryHolder[] applyFilters( ExtendedSummaryHolder[] extractedData ){
+        List<ExtendedSummaryHolder> filteredData = new ArrayList<ExtendedSummaryHolder>();
 
-        for( SummaryHolder summaryObject : extractedData ){
+        for( ExtendedSummaryHolder summaryObject : extractedData ){
             if( this.filterVoteCountGreaterThan2000 && Integer.parseInt(summaryObject.voteCount)<2000 ) continue;
-            //if( this.filterOnlyFav  ) continue;
+            //if( this.filterOnlyFav && !summaryObject.isFavorite ) continue;
             filteredData.add( summaryObject );
         }
 
-        SummaryHolder[] filteredDataArray = new SummaryHolder[ filteredData.size() ];
+        ExtendedSummaryHolder[] filteredDataArray = new ExtendedSummaryHolder[ filteredData.size() ];
         filteredDataArray = filteredData.toArray( filteredDataArray );
 
         return filteredDataArray;
@@ -109,14 +110,12 @@ public class PresenterList implements InterfaceListPresenterInteractor, Interfac
     public void notifySuccessClearTableSummary() {
     }
 
-
-
     @Override
     public void notifyDownloadErrorMovieDetails() {}
 
     @Override
     public void recyclerviewNotifyItemSelected(int indexSelectedItem) {
-        activityList.jumpToDetailActivity( extractedData[indexSelectedItem] );
+        activityList.jumpToDetailActivity( filteredData[indexSelectedItem] );
     }
 
     public void applyFilterGreaterThan2000( boolean filterVoteCountGreaterThan2000 ){

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import com.ldgoyes.condorlabsskilltestgoyes.R;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBConstants;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBManager;
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.ExtendedSummaryHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.SummaryHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.webresources.asynctasks.AsyncTaskDownloadImage;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.webresources.asynctasks.AsyncTaskDownloadJSON;
@@ -162,7 +163,7 @@ public class InteractorList implements InterfaceListInteractorDatabase {
 
 
     public void extractPopularMoviesFromDatabase(){
-        DBManager.listSummaryEntries(
+        DBManager.listExtendedSummaryEntries(
                 context,
                 this
         );
@@ -191,12 +192,21 @@ public class InteractorList implements InterfaceListInteractorDatabase {
     }
 
     @Override
-    public void successfulListSummary(SummaryHolder[] extractedData) {
-        presenterList.notifyExtractionSuccessPopularMovies( extractedData );
-    }
+    public void successfulListSummary(SummaryHolder[] extractedData) {}
 
     @Override
     public void errorListSummary() {
+
+    }
+
+    @Override
+    public void successfulListExtendedSummary(ExtendedSummaryHolder[] extractedData) {
+        presenterList.notifyExtractionSuccessPopularMovies( extractedData );
+
+    }
+
+    @Override
+    public void errorListExtendedSummary() {
 
     }
 

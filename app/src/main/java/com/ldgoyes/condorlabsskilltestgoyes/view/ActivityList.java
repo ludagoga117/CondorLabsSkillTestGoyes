@@ -52,6 +52,11 @@ public class ActivityList extends AppCompatActivity implements InterfaceListPres
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
     public void jumpToDetailActivity(SummaryHolder summaryObject) {
         Intent activityListIntent = new Intent (
                 ActivityList.this,
