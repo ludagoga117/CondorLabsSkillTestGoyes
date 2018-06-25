@@ -1,5 +1,6 @@
 package com.ldgoyes.condorlabsskilltestgoyes.view;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
@@ -66,7 +67,16 @@ public class ActivityDetail extends AppCompatActivity implements InterfaceDetail
                             Uri.parse("vnd.youtube:" + extractedData.trailerLink
                             )
                     );
-                    ActivityDetail.this.startActivity( youtubeIntent );
+                    Intent youtubeWebIntent = new Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("http://www.youtube.com/watch?v=" + extractedData.trailerLink
+                            )
+                    );
+                    try {
+                        ActivityDetail.this.startActivity(youtubeIntent);
+                    } catch (ActivityNotFoundException ex) {
+                        ActivityDetail.this.startActivity(youtubeWebIntent);
+                    }
                 }
             });
         }
