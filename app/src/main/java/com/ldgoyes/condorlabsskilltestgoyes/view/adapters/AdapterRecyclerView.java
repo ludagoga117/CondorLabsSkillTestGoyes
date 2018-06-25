@@ -58,16 +58,26 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
     }
 
     @Override
-    public void onBindViewHolder(Holder holder, final int position) {
+    public void onBindViewHolder(final Holder holder, final int position) {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 presenterList.recyclerviewNotifyItemSelected( position );
             }
         });
-        Bitmap imageToShow = getBitmapFromKey( data[position].movieId );
+        final Bitmap imageToShow = getBitmapFromKey( data[position].movieId );
         if( imageToShow != null ){
-            holder.imageViewPoster.setImageBitmap( imageToShow );
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    holder.imageViewPoster.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            holder.imageViewPoster.setImageBitmap( imageToShow );
+                        }
+                    }, position * 1000);
+                }
+            }).start();
         }
         holder.textViewTitle.setText( data[position].movieName );
         holder.textViewVoteAverage.setText( data[position].voteAverage );

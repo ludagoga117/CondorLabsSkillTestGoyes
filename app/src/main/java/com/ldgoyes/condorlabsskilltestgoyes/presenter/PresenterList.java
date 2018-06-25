@@ -26,6 +26,8 @@ public class PresenterList implements InterfaceListPresenterInteractor, Interfac
 
     private SummaryHolder[] extractedData;
 
+    private int imagesToDownload;
+
 
     public PresenterList ( Context context, InterfaceListPresenterView activityList ){
         this.context = context;
@@ -53,13 +55,15 @@ public class PresenterList implements InterfaceListPresenterInteractor, Interfac
     }
 
     @Override
-    public void notifyDownloadSuccessImage(String movieId, Bitmap image) {
+    public synchronized void notifyDownloadSuccessImage(String movieId, Bitmap image) {
         adapterRecyclerView.addImageToShow( movieId, image );
-        adapterRecyclerView.notifyDataSetChanged();
+        if( --imagesToDownload == 0 ){
+            adapterRecyclerView.notifyDataSetChanged();
+        }
     }
 
     @Override
-    public void notifyExtractionSuccessPopularMovies(SummaryHolder[] extractedData) {
+    public void notifyExtractionSuccessPopularMovies(final SummaryHolder[] extractedData) {
         this.extractedData = extractedData;
         adapterRecyclerView = new AdapterRecyclerView(
                 extractedData,
@@ -67,6 +71,7 @@ public class PresenterList implements InterfaceListPresenterInteractor, Interfac
         );
         activityList.initRecyclerview( adapterRecyclerView );
 
+        imagesToDownload = extractedData.length;
         for( SummaryHolder summaryObject : extractedData ){
             interactorList.downloadImage( summaryObject.movieId, summaryObject.posterPicturePath );
         }
