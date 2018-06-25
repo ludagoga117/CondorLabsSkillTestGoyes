@@ -1,14 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.ActivityDetail">
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="detail"/>
+        android:layout_height="match_parent">
 
-</android.support.constraint.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/activitydetail_margin_top"
+            android:paddingBottom="@dimen/activitydetail_margin_top"
+            android:paddingLeft="@dimen/activitydetail_margin_horizontal"
+            android:paddingRight="@dimen/activitydetail_margin_horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/activitydetail_movietitle"
+                    android:textSize="@dimen/big_text"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/activitydetail_imageview_favorite"
+                    android:layout_width="@dimen/activitydetail_favorite_size"
+                    android:layout_height="@dimen/activitydetail_favorite_size"
+                    android:src="@drawable/ic_favorite_border_black_24dp"
+                    android:tint="@color/red" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_height"
+                android:layout_marginVertical="@dimen/divider_vertical_margin"
+                android:background="@color/divider_color" />
+
+            <LinearLayout
+                android:id="@+id/activitydetail_linearlayout_traileryoutube"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activitydetail_segment_topmargin">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/activitydetail_watchtrailer"
+                    android:textSize="@dimen/medium_text" />
+
+                <ImageView
+                    android:layout_width="@dimen/activitydetail_favorite_size"
+                    android:layout_height="@dimen/activitydetail_favorite_size"
+                    android:src="@drawable/ic_videocam_black_24dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/activitydetail_linearlayout_overview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activitydetail_segment_topmargin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/activitydetail_overview"
+                    android:textSize="@dimen/medium_text" />
+
+                <View
+                    android:layout_width="200dp"
+                    android:layout_height="@dimen/divider_height_short"
+                    android:layout_marginVertical="@dimen/divider_vertical_margin_short"
+                    android:background="@color/divider_color" />
+
+                <TextView
+                    android:id="@+id/activitydetail_textview_overviewcontent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loremipsum"
+                    android:textSize="@dimen/small_text" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/activitydetail_linearlayout_releasedate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activitydetail_segment_topmargin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/activitydetail_releasedate"
+                    android:textSize="@dimen/medium_text" />
+
+                <View
+                    android:layout_width="200dp"
+                    android:layout_height="@dimen/divider_height_short"
+                    android:layout_marginVertical="@dimen/divider_vertical_margin_short"
+                    android:background="@color/divider_color" />
+
+                <TextView
+                    android:id="@+id/activitydetail_textview_releasedatecontent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/activitydetail_releasedate_example"
+                    android:textSize="@dimen/small_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/activitydetail_linearlayout_budget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activitydetail_segment_topmargin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/activitydetail_budget"
+                    android:textSize="@dimen/medium_text" />
+
+                <View
+                    android:layout_width="200dp"
+                    android:layout_height="@dimen/divider_height_short"
+                    android:layout_marginVertical="@dimen/divider_vertical_margin_short"
+                    android:background="@color/divider_color" />
+
+                <TextView
+                    android:id="@+id/activitydetail_textview_budget"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/activitydetail_budget_example"
+                    android:textSize="@dimen/small_text" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="big_text">30sp</dimen>
+    <dimen name="big_text">28sp</dimen>
+    <dimen name="medium_text">20sp</dimen>
+    <dimen name="small_text">15sp</dimen>
+
+
+    <dimen name="activitydetail_margin_top">50dp</dimen>
+    <dimen name="activitydetail_margin_horizontal">30dp</dimen>
+    <dimen name="activitydetail_favorite_size">35dp</dimen>
+    <dimen name="divider_height">2dp</dimen>
+    <dimen name="divider_height_short">1dp</dimen>
+    <dimen name="divider_vertical_margin">8dp</dimen>
+    <dimen name="divider_vertical_margin_short">5dp</dimen>
+    <dimen name="activitydetail_segment_topmargin">15dp</dimen>
+
 </resources>

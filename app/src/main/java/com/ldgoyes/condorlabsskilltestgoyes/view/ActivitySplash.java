@@ -28,7 +28,7 @@ public class ActivitySplash extends AppCompatActivity implements InterfaceSplash
     public void launchNextActivity() {
         Intent activityListIntent = new Intent (
                 ActivitySplash.this,
-                ActivityList.class
+                ActivityDetail.class
         );
         activityListIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(activityListIntent);
