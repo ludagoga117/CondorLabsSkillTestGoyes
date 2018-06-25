@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.ldgoyes.condorlabsskilltestgoyes.R;
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBConstants;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBManager;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.SummaryHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListPresenterView;
@@ -38,7 +39,8 @@ public class ActivityList extends AppCompatActivity implements InterfaceListPres
                 ActivityList.this,
                 ActivityDetail.class
         );
-        // TODO pasar informacion a traves de los extras
+        activityListIntent.putExtra(DBConstants.DataSummary.MOVIE_ID, summaryObject.movieId);
+        activityListIntent.putExtra(DBConstants.DataSummary.MOVIE_NAME, summaryObject.movieName);
         startActivity(activityListIntent);
     }
 

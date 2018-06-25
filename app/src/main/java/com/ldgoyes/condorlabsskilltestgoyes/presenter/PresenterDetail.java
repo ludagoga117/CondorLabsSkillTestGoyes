@@ -15,14 +15,16 @@ public class PresenterDetail implements InterfaceDetailPresenterInteractor {
     private InterfaceDetailPresenterView activityDetail;
     private InteractorDetail interactorDetail;
     private String movieId;
+    private String movieName;
 
     private String tmdbPopularMoviesLanguage;
 
-    public PresenterDetail(Context context, InterfaceDetailPresenterView activityDetail, String movieId ){
+    public PresenterDetail(Context context, InterfaceDetailPresenterView activityDetail, String movieId, String movieName ){
         this.context = context;
         this.activityDetail = activityDetail;
         this.remainingUpdates = 0;
         this.movieId = movieId;
+        this.movieName = movieName;
 
         this.interactorDetail = InteractorDetail.instanceOf(
                 context,
@@ -31,8 +33,8 @@ public class PresenterDetail implements InterfaceDetailPresenterInteractor {
         this.tmdbPopularMoviesLanguage = context.getString( R.string.default_tmdb_popular_movies_language );
     }
 
-    public static PresenterDetail instanceOf( Context context, InterfaceDetailPresenterView activityDetail, String movieId ){
-        return new PresenterDetail( context, activityDetail, movieId );
+    public static PresenterDetail instanceOf( Context context, InterfaceDetailPresenterView activityDetail, String movieId, String movieName ){
+        return new PresenterDetail( context, activityDetail, movieId, movieName );
     }
 
     public void start(){
@@ -47,10 +49,7 @@ public class PresenterDetail implements InterfaceDetailPresenterInteractor {
 
     @Override
     public void notifyExtractionSuccessMovieDetails(DetailHolder extractedData) {
-        String movieId = extractedData.movieId;
-        String trailerLink = extractedData.trailerLink;
-        String budget = extractedData.budget;
-
+        activityDetail.setUI( extractedData, movieName );
     }
 
     @Override

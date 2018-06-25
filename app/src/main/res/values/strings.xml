@@ -27,7 +27,7 @@
     <string name="filter_vote_couter_greater_2000"><![CDATA[Filter: Vote counter > 2000]]></string>
     <string name="filter_show_only_favorite_movies">Filter: Show only favs</string>
     <string name="activitydetail_movietitle">Movie title</string>
-    <string name="activitydetail_watchtrailer">Watch trailer</string>
+    <string name="activitydetail_watchtrailer">Click here to watch trailer</string>
     <string name="activitydetail_overview">Overview</string>
     <string name="loremipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean maximus aliquet libero, et lobortis ante commodo vitae. Nullam sit amet magna nunc. Etiam accumsan, leo eu porta fringilla, leo justo porta orci, id tincidunt sapien magna pharetra arcu. Pellentesque sed turpis sapien. Sed a ipsum rutrum justo molestie viverra at quis ligula. Ut mauris quam, sodales et arcu eu, tempus suscipit lorem. Nullam faucibus, lectus ac feugiat consectetur, massa odio euismod sem, sed pellentesque felis dui eu justo. Maecenas aliquam ultricies lacus, quis venenatis sapien suscipit at. Etiam dapibus sit amet nunc et congue.  Sed mollis diam eget leo pretium elementum. Sed convallis purus odio, at condimentum nunc aliquam eget. Aliquam et maximus sem, vitae pellentesque ipsum. Sed ut tortor eget magna eleifend pulvinar ut a justo. Donec et ultrices metus, id molestie orci. Fusce sit amet tempus orci, nec maximus leo. Vestibulum at magna quis diam iaculis ultricies vitae vitae dui. Aliquam erat volutpat. Cras sed consequat felis. Nam a iaculis nisi. Nulla metus sapien, rutrum nec aliquam at, rutrum at purus. Curabitur eget libero lorem. Ut vehicula ac mauris quis luctus. Etiam sed accumsan magna.</string>
     <string name="activitydetail_releasedate">Release date</string>

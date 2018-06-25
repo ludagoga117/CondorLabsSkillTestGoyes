@@ -123,7 +123,7 @@ public class InteractorDetail implements InterfaceDetailInteractorDatabase {
             String youtubeVideoKey = firstVideo.getString( context.getString(R.string.JSONObject_TAG_youtubevideo) );
 
             HashMap <String, String> newDetailEntryArguments = new HashMap<>();
-            newDetailEntryArguments.put( DBConstants.DataDetail.TRAILER_LINK, "https://www.youtube.com/watch?v=" + youtubeVideoKey );
+            newDetailEntryArguments.put( DBConstants.DataDetail.TRAILER_LINK, youtubeVideoKey );
 
             DBManager.updateDetailEntry(
                     context,
