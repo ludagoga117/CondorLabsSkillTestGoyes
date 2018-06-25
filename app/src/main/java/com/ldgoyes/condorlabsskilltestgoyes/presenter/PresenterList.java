@@ -58,6 +58,7 @@ public class PresenterList implements InterfaceListPresenterInteractor, Interfac
                 extractedData,
                 this
         );
+        activityList.initRecyclerview( adapterRecyclerView );
     }
 
 
