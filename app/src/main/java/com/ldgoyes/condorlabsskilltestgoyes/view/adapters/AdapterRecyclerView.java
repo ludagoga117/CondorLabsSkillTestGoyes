@@ -67,7 +67,8 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
         });
         final Bitmap imageToShow = getBitmapFromKey( data[position].movieId );
         if( imageToShow != null ){
-            new Thread(new Runnable() {
+            holder.imageViewPoster.setImageBitmap( imageToShow );
+            /*new Thread(new Runnable() {
                 @Override
                 public void run() {
                     holder.imageViewPoster.postDelayed(new Runnable() {
@@ -77,7 +78,7 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
                         }
                     }, position * 1000);
                 }
-            }).start();
+            }).start();*/
         }
         holder.textViewTitle.setText( data[position].movieName );
         holder.textViewVoteAverage.setText( data[position].voteAverage );

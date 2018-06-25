@@ -2,11 +2,9 @@ package com.ldgoyes.condorlabsskilltestgoyes.presenter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
 
 import com.ldgoyes.condorlabsskilltestgoyes.R;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.InteractorList;
-import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.DetailHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.SummaryHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListPresenterInteractor;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListPresenterRVAdapter;
@@ -58,9 +56,10 @@ public class PresenterList implements InterfaceListPresenterInteractor, Interfac
     @Override
     public synchronized void notifyDownloadSuccessImage(String movieId, Bitmap image) {
         adapterRecyclerView.addImageToShow( movieId, image );
-        if( --imagesToDownload == 0 ){
+        adapterRecyclerView.notifyDataSetChanged();
+        /*if( --imagesToDownload == 0 ){
             adapterRecyclerView.notifyDataSetChanged();
-        }
+        }*/
     }
 
     @Override

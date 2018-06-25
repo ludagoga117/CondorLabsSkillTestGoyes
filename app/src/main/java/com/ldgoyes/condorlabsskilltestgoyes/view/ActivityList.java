@@ -47,7 +47,7 @@ public class ActivityList extends AppCompatActivity implements InterfaceListPres
     @Override
     public void initRecyclerview(AdapterRecyclerView adapterRecyclerView) {
         recyclerView = (RecyclerView) findViewById(R.id.activitylist_recyclerview );
-        recyclerView.hasFixedSize();
+        recyclerView.setHasFixedSize(true);
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager( layoutManager );
