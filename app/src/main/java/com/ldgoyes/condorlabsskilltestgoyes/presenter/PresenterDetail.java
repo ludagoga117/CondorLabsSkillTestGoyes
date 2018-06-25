@@ -19,6 +19,8 @@ public class PresenterDetail implements InterfaceDetailPresenterInteractor {
 
     private String tmdbPopularMoviesLanguage;
 
+    private DetailHolder extractedData;
+
     public PresenterDetail(Context context, InterfaceDetailPresenterView activityDetail, String movieId, String movieName ){
         this.context = context;
         this.activityDetail = activityDetail;
@@ -49,6 +51,7 @@ public class PresenterDetail implements InterfaceDetailPresenterInteractor {
 
     @Override
     public void notifyExtractionSuccessMovieDetails(DetailHolder extractedData) {
+        this.extractedData = extractedData;
         activityDetail.setUI( extractedData, movieName );
     }
 
@@ -61,4 +64,9 @@ public class PresenterDetail implements InterfaceDetailPresenterInteractor {
 
     @Override
     public void notifyDownloadErrorVideo() {}
+
+    public void invertFavoriteValue(){
+        remainingUpdates = 1;
+        interactorDetail.invertFavorite( movieId, this.extractedData.isFavorite );
+    }
 }

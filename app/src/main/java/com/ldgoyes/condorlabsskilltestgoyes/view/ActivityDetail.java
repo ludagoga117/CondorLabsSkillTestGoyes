@@ -54,6 +54,12 @@ public class ActivityDetail extends AppCompatActivity implements InterfaceDetail
             imageViewFavorite.setImageResource( R.drawable.ic_favorite_border_black_24dp );
         }
         imageViewFavorite.setColorFilter( ContextCompat.getColor( ActivityDetail.this, R.color.red) );
+        imageViewFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenterDetail.invertFavoriteValue();
+            }
+        });
 
         if( extractedData.trailerLink == null ){
             linearLayoutFavorite.setVisibility( View.GONE );

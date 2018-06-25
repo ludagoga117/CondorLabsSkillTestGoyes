@@ -47,6 +47,13 @@ public class InteractorList implements InterfaceListInteractorDatabase {
         );
     }
 
+    public void clearDetailTable(){
+        DBManager.clearDetailEntries(
+                context,
+                this
+        );
+    }
+
     public void downloadImage( String movieId, String URLdownloadImage ){
         AsyncTaskDownloadBitmap asyncTaskDownloadBitmap = new AsyncTaskDownloadBitmap(
                 URLdownloadImage,
@@ -222,6 +229,16 @@ public class InteractorList implements InterfaceListInteractorDatabase {
 
     @Override
     public void errorCreateDetail() {
+
+    }
+
+    @Override
+    public void successfulClearDetail() {
+
+    }
+
+    @Override
+    public void errorClearDetail() {
 
     }
 }

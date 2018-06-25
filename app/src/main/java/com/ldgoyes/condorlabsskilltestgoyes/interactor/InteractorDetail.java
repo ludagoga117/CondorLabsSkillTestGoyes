@@ -5,6 +5,7 @@ import android.content.Context;
 import com.ldgoyes.condorlabsskilltestgoyes.R;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBConstants;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBManager;
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.asynctasks.AsyncTaskUpdateDetail;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.DetailHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.webresources.asynctasks.AsyncTaskDownloadJSON;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.webresources.asynctasks.AsyncTaskResponseDownloadJSON;
@@ -31,6 +32,19 @@ public class InteractorDetail implements InterfaceDetailInteractorDatabase {
 
     public static InteractorDetail instanceOf( Context context, InterfaceDetailPresenterInteractor presenterDetail ){
         return new InteractorDetail( context, presenterDetail );
+    }
+
+    public void invertFavorite( String movieId, boolean actualIsFavorite ){
+        HashMap<String, String> newDetailEntryArguments = new HashMap<>();
+        newDetailEntryArguments.put( DBConstants.DataDetail.IS_FAVORITE, (!actualIsFavorite)?"true":"false");
+
+        DBManager.updateDetailEntry(
+                context,
+                InteractorDetail.this,
+                newDetailEntryArguments,
+                movieId
+        );
+
     }
 
     public void downloadMovieDetails( String movieId, String language ){

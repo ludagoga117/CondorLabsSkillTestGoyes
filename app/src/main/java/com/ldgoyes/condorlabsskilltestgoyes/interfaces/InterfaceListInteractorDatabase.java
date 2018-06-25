@@ -17,4 +17,6 @@ public interface InterfaceListInteractorDatabase {
 
     void successfulCreateDetail();
     void errorCreateDetail();
+    void successfulClearDetail();
+    void errorClearDetail();
 }

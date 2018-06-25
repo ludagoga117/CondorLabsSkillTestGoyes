@@ -46,6 +46,7 @@ public class PresenterList implements InterfaceListPresenterInteractor, Interfac
 
     public void start(){
         interactorList.clearPopularMoviesList();
+        interactorList.clearDetailTable();
         interactorList.downloadPopularMoviesList( tmdbPopularMoviesLanguage, tmdbPopularMoviesPageToQuery );
     }
 
