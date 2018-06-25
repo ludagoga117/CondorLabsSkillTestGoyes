@@ -72,7 +72,6 @@ public class AsyncTaskListExtendedSummary extends AsyncTask<Void, Void, Extended
                         c.getString( 5 ),
                         c.getString( 6 ).equals("true")
                 );
-            Log.d("DDGG",c.getString( 6 ) + Integer.toString(storedMovies) );
             entriesList.add( extendedSummaryObject );
             c.moveToNext();
         }
