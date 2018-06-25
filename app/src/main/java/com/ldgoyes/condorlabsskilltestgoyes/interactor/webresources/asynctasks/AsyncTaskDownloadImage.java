@@ -4,23 +4,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 
-public class AsyncTaskDownloadBitmap extends AsyncTask<Void, Void, Bitmap> {
-    private AsyncTaskResponseDownloadBitmap asyncTaskResponse;
+public class AsyncTaskDownloadImage extends AsyncTask<Void, Void, Bitmap> {
+    private AsyncTaskResponseDownloadImage asyncTaskResponse;
     private String URLtoDownload;
 
-    public AsyncTaskDownloadBitmap(String URLtoDownload, AsyncTaskResponseDownloadBitmap asyncTaskResponse ){
+    public AsyncTaskDownloadImage(String URLtoDownload, AsyncTaskResponseDownloadImage asyncTaskResponse ){
         this.URLtoDownload = URLtoDownload;
         this.asyncTaskResponse = asyncTaskResponse;
     }

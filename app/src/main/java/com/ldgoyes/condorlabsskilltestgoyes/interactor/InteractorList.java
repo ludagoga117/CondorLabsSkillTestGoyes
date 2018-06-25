@@ -2,16 +2,14 @@ package com.ldgoyes.condorlabsskilltestgoyes.interactor;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
 
 import com.ldgoyes.condorlabsskilltestgoyes.R;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBConstants;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.DBManager;
-import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.DetailHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.SummaryHolder;
-import com.ldgoyes.condorlabsskilltestgoyes.interactor.webresources.asynctasks.AsyncTaskDownloadBitmap;
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.webresources.asynctasks.AsyncTaskDownloadImage;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.webresources.asynctasks.AsyncTaskDownloadJSON;
-import com.ldgoyes.condorlabsskilltestgoyes.interactor.webresources.asynctasks.AsyncTaskResponseDownloadBitmap;
+import com.ldgoyes.condorlabsskilltestgoyes.interactor.webresources.asynctasks.AsyncTaskResponseDownloadImage;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.webresources.asynctasks.AsyncTaskResponseDownloadJSON;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListInteractorDatabase;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListPresenterInteractor;
@@ -55,15 +53,15 @@ public class InteractorList implements InterfaceListInteractorDatabase {
     }
 
     public void downloadImage( String movieId, String URLdownloadImage ){
-        AsyncTaskDownloadBitmap asyncTaskDownloadBitmap = new AsyncTaskDownloadBitmap(
+        AsyncTaskDownloadImage asyncTaskDownloadImage = new AsyncTaskDownloadImage(
                 URLdownloadImage,
                 processDownloadImage(movieId)
         );
-        asyncTaskDownloadBitmap.execute();
+        asyncTaskDownloadImage.execute();
     }
 
-    private AsyncTaskResponseDownloadBitmap processDownloadImage(final String movieId ){
-        AsyncTaskResponseDownloadBitmap asyncTaskResponseDownloadBitmap = new AsyncTaskResponseDownloadBitmap() {
+    private AsyncTaskResponseDownloadImage processDownloadImage(final String movieId ){
+        AsyncTaskResponseDownloadImage asyncTaskResponseDownloadImage = new AsyncTaskResponseDownloadImage() {
             @Override
             public void processResult(Bitmap image) {
                 if( image != null ){
@@ -71,7 +69,7 @@ public class InteractorList implements InterfaceListInteractorDatabase {
                 }
             }
         };
-        return asyncTaskResponseDownloadBitmap;
+        return asyncTaskResponseDownloadImage;
     }
 
     public void downloadPopularMoviesList( String language, String pageToQuery ){
