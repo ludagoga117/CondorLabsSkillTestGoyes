@@ -13,5 +13,8 @@
     <dimen name="divider_vertical_margin">8dp</dimen>
     <dimen name="divider_vertical_margin_short">5dp</dimen>
     <dimen name="activitydetail_segment_topmargin">15dp</dimen>
+    <dimen name="recyclerview_item_height">150dp</dimen>
+    <dimen name="recyclerview_item_padding_vertical">10dp</dimen>
+    <dimen name="recyclerview_item_padding_horizontal">10dp</dimen>
 
 </resources>

@@ -8,9 +8,11 @@ import com.ldgoyes.condorlabsskilltestgoyes.interactor.InteractorList;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.DetailHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interactor.database.holders.SummaryHolder;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListPresenterInteractor;
+import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListPresenterRVAdapter;
 import com.ldgoyes.condorlabsskilltestgoyes.interfaces.InterfaceListPresenterView;
+import com.ldgoyes.condorlabsskilltestgoyes.view.adapters.AdapterRecyclerView;
 
-public class PresenterList implements InterfaceListPresenterInteractor{
+public class PresenterList implements InterfaceListPresenterInteractor, InterfaceListPresenterRVAdapter {
 
     private Context context;
     private InterfaceListPresenterView activityList;
@@ -18,6 +20,10 @@ public class PresenterList implements InterfaceListPresenterInteractor{
 
     private String tmdbPopularMoviesLanguage;
     private String tmdbPopularMoviesPageToQuery;
+
+    private AdapterRecyclerView adapterRecyclerView;
+
+    private SummaryHolder[] extractedData;
 
 
     public PresenterList ( Context context, InterfaceListPresenterView activityList ){
@@ -40,26 +46,35 @@ public class PresenterList implements InterfaceListPresenterInteractor{
         interactorList.downloadPopularMoviesList( tmdbPopularMoviesLanguage, tmdbPopularMoviesPageToQuery );
     }
 
-
-    @Override
-    public void notifyDownloadErrorPopularMovies() {}
-
     @Override
     public void notifyDownloadSuccessPopularMovies() {
         interactorList.extractPopularMoviesFromDatabase();
     }
 
     @Override
+    public void notifyExtractionSuccessPopularMovies(SummaryHolder[] extractedData) {
+        this.extractedData = extractedData;
+        adapterRecyclerView = new AdapterRecyclerView(
+                extractedData,
+                this
+        );
+    }
+
+
+    @Override
+    public void notifyDownloadErrorPopularMovies() {}
+
+    @Override
     public void notifySuccessClearTableSummary() {
     }
 
-    @Override
-    public void notifyExtractionSuccessPopularMovies(SummaryHolder[] extractedData) {
-        for( SummaryHolder summaryObject : extractedData ){
 
-        }
-    }
 
     @Override
     public void notifyDownloadErrorMovieDetails() {}
+
+    @Override
+    public void recyclerviewNotifyItemSelected(int indexSelectedItem) {
+        activityList.jumpToDetailActivity( extractedData[indexSelectedItem] );
+    }
 }
